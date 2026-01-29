@@ -1,43 +1,83 @@
 # Portfolio - Hugo LOUREIRO 🛡️💻
 
-Bienvenue sur mon portfolio personnel **Cyber Core V2**.
-Ce site vitrine présente mon parcours, mes compétences et mes projets en **Cybersécurité** et **Réseaux**.
+<div align="center">
+  <img src="https://img.shields.io/badge/Status-V2%20Cyber%20Core-success?style=for-the-badge&logo=dependabot&logoColor=white&color=00f3ff">
+  <img src="https://img.shields.io/badge/Stack-HTML%20%2F%20CSS%20%2F%20JS-orange?style=for-the-badge&logo=html5&logoColor=white&color=39ff14">
+</div>
 
-🌐 **En ligne :** [hloureiro.fr](https://hloureiro.fr) (ou lien GitHub Pages à venir)
+<br>
+
+Bienvenue sur le dépôt de mon **Portfolio Personnel V2**.
+Ce site vitrine a été entièrement repensé avec une esthétique **"Cyber Core / Hacker"** pour immersivement présenter mon profil d'Ingénieur Cybersécurité & Réseaux.
+
+🌐 **En ligne :** [hloureiro.fr](https://hloureiro.fr)
+
+---
 
 ## 🎨 Design System "Cyber Core"
 
-Le design a été entièrement repensé pour refléter une identité technique et futuriste ("Hacker / Cyberpunk"), avec :
-*   **Palette** : Cyan Néon (`#00f3ff`) & Vert Toxique (`#39ff14`).
-*   **Ambiance** : Fond quadrillé animé, effet CRT/Scanline global, typographies HUD.
-*   **Composants** : Cartes à coins coupés, effets de lueur (glow), iconographie technique.
+L'identité visuelle est inspirée de l'univers Cyberpunk et des terminaux Linux, avec une touche "Toxic" :
 
-## 🛠️ Technologies
+*   **Palette** : 
+    *   🔵 `Cyan (#00f3ff)` : Couleur primaire (Tech, Réseau).
+    *   🟢 `Toxic Green (#39ff14)` : Accents agressifs (Hacker, Succès).
+*   **Ambiance** : 
+    *   🖥️ **Matrix Rain** : Arrière-plan animé (Canvas JS).
+    *   📺 **CRT Scanlines** : Effet vieil écran cathodique.
+    *   ⚡ **Glitch & Scramble** : Animations et déchiffrement de texte.
+*   **Composants** : 
+    *   Titres style **HUD** (Head-Up Display).
+    *   Cartes à coins coupés (Clip-path) et bordures techniques.
 
-*   **HTML5 / CSS3** (Vanilla, pas de framework CSS lourd).
-*   **JavaScript** (Vanilla) pour les interactions et l'API GitHub.
-*   **Font Awesome** pour les icônes.
-*   **Google Fonts** : *Outfit* (Titres), *JetBrains Mono* (Code/Tech), *Press Start 2P* (Pixel Art/Gaming).
+## 🚀 Fonctionnalités & Contenu
 
-## 🚀 Fonctionnalités
+### 1. Hero Section
+Animation d'introduction avec effet **Glitch** sur le nom et sous-titre dynamique.
 
-*   **Hero Section Glitch** : Animation d'introduction dynamique.
-*   **Timeline Parcours** : Affichage chronologique des expériences.
-*   **Compétences Techniques** : Grille de logos et listes catégorisées (Réseaux, Cyber, Système).
-*   **Projets Dynamiques** : Récupération automatique des projets épinglés depuis l'API GitHub (`Lightshadow02`).
-*   **Section Intérêts** : Mise en page spéciale style "Minecraft" pour le projet Nerysia.
+### 2. Timeline Parcours
+Rétrospective chronologique complète, de mon Bac Pro à mon Master actuel, en passant par mes expériences chez **Iveco** et **MS Solutions**. Données exactes basées sur mon CV.
 
-## 📦 Installation Locale
+### 3. Compétences Techniques
+Cartes stylisées regroupant mes expertises :
+*   **Réseaux** : Cisco, Juniper, VPN, Routage.
+*   **Cybersécurité** : Pentesting, SIEM, Firewalling (pfSense, Fortinet).
+*   **Système & Scripting** : Linux, Windows Server, PowerShell, Bash.
 
-1.  Clonez le dépôt :
-    ```bash
-    git clone https://github.com/Lightshadow02/Portfolio.git
-    ```
-2.  Ouvrez le dossier :
-    ```bash
-    cd Portfolio
-    ```
-3.  Ouvrez `index.html` dans votre navigateur.
+### 4. Projets Dynamiques (API GitHub)
+Intégration automatique via l'API GitHub pour afficher mes **6 dépôts les plus récents** taggués avec le topic `cours`.
+*   Filtre automatique.
+*   Tri par date de mise à jour.
+*   Cartes 3D Flip (recto/verso).
+
+### 5. Centres d'Intérêt & HomeLab
+*   **Nerysia** : Projet Serveur Minecraft (Infra Cross-Serveur, Dev Java, Web).
+*   **HomeLab** : Serveur Docker, Nextcloud, pfSense @Home.
+*   **Loisirs** : Musculation, Veille IA, Streaming Twitch.
+
+## �️ Installation & Tests
+
+Pour tester ce projet en local :
+
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/Lightshadow02/Portfolio.git
+
+# 2. Ouvrir le dossier
+cd Portfolio
+
+# 3. Lancer (Double-cliquer sur index.html ou utiliser Live Server)
+code .
+```
+
+*Aucun build system (npm/webpack) n'est nécessaire. C'est du pure Vanilla JS/CSS.*
+
+---
+
+## 📞 Contact
+
+*   **Linktree** : [linktr.ee/LOUREIROH](https://linktr.ee/LOUREIROH)
+*   **LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/hugo-loureiro035/)
+*   **GitHub** : [@Lightshadow02](https://github.com/Lightshadow02)
 
 ---
 *© 2024 Hugo Loureiro - Construit avec passion & néons.*
