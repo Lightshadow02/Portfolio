@@ -1,0 +1,36 @@
+/* Special Interest: HomeLab (Cyber Style) */
+.interest-homelab {
+    grid-column: 1 / -1;
+    /* Full Width */
+    background: rgba(5, 10, 20, 0.9);
+    border: 2px solid var(--accent-primary);
+    /* Cyan border */
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+    text-align: left;
+    margin-top: 20px;
+}
+
+.interest-homelab h3 {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1rem;
+}
+
+.interest-homelab p {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: #ddd;
+    line-height: 1.8;
+    border-left: 3px solid var(--accent-primary);
+    padding-left: 15px;
+}
+
+.interest-homelab:hover {
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    transform: translateY(-2px);
+}
