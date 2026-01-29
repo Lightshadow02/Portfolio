@@ -34,12 +34,18 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    /* Moving Cyber Grid Background */
-    background-image:
-        linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    background-position: center top;
+    /* Removed Grid Background to favor Matrix Canvas */
+}
+
+#matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.15;
+    /* Much more subtle */
 }
 
 /* CRT Scanline Animation */
@@ -339,7 +345,9 @@ ul {
 
 .timeline-content {
     padding: 20px;
-    background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(5, 5, 5, 0.95) 100%);
+    /* More opaque */
+    backdrop-filter: blur(5px);
     border: 1px solid var(--dim-color);
     border-left: 3px solid var(--accent-primary);
     /* Tech Corner Clip */
@@ -401,7 +409,9 @@ ul {
 }
 
 .skill-category {
-    background-color: rgba(10, 15, 12, 0.8);
+    background-color: rgba(5, 5, 5, 0.9);
+    /* More opaque */
+    backdrop-filter: blur(5px);
     padding: 2rem;
     border: 1px solid var(--dim-color);
     position: relative;
@@ -494,7 +504,9 @@ ul {
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    background-color: var(--card-bg);
+    background-color: rgba(5, 5, 5, 0.4);
+    /* Transparence augmentée (Moins fort) */
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(0, 243, 255, 0.2);
     display: flex;
     flex-direction: column;
@@ -510,7 +522,8 @@ ul {
 
 .project-back {
     transform: rotateY(180deg);
-    background-color: #000;
+    background-color: rgba(5, 5, 5, 0.5);
+    /* Back transparency */
     border: 1px solid var(--accent-secondary);
     clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
 }
@@ -579,7 +592,7 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--bg-color);
+    background: transparent;
 }
 
 .glitch::before {

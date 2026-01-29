@@ -32,16 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = 'Lightshadow02';
     const apiUrl = `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`;
 
-    // List of pinned repos in order
-    const pinnedRepoNames = [
-        'Rapport_de_fin_detudes-BUT3',
-        'Optimisation-Minecraft',
-        'DMZNV3',
-        'VPN-Itin-rant',
-        'Mise-en-place-d_un-service-web-entrant',
-        'Nerysia-LAUCHER'
-    ];
-
     async function fetchProjects() {
         try {
             const response = await fetch(apiUrl);
@@ -50,12 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const data = await response.json();
 
-            // Filter and sort based on the pinned list order
-            const pinnedProjects = pinnedRepoNames
-                .map(name => data.find(repo => repo.name === name))
-                .filter(repo => repo !== undefined);
+            // Filter by topic 'cours' (case insensitive), sort by updated date, and take top 6
+            const recentProjects = data
+                .filter(repo => repo.topics && repo.topics.some(t => t.toLowerCase() === 'cours'))
+                .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+                .slice(0, 6);
 
-            renderProjects(pinnedProjects);
+            renderProjects(recentProjects);
         } catch (error) {
             console.error('Error fetching projects:', error);
             projectsGrid.innerHTML = '<p class="loading">Impossible de charger les projets pour le moment.</p>';
