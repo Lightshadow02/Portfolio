@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_homelab.css">
     <link rel="stylesheet" href="style_github_btn.css">
+    <link rel="stylesheet" href="style_tooltips.css">
     <!-- Google Fonts for Cyber/Tech look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -172,53 +173,64 @@
                 <h3><i class="fas fa-laptop-code"></i> Technologies Connues</h3>
                 <div class="tech-grid">
                     <!-- Logos fetched from Devicon CDN where available -->
-                    <div class="tech-item" title="Proxmox">
+                    <div class="tech-item" title="Proxmox"
+                        data-description="Plateforme de virtualisation open-source complète. Combine hyperviseur KVM et conteneurs LXC pour une gestion unifiée.">
                         <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/proxmox.svg" alt="Proxmox">
                         <span>Proxmox</span>
                     </div>
-                    <div class="tech-item" title="VMware ESXi">
+                    <div class="tech-item" title="VMware ESXi"
+                        data-description="Hyperviseur Bare-Metal de VMware. Permet la virtualisation de niveau entreprise, la gestion de clusters et l'allocation dynamique de ressources.">
                         <!-- User provided icon -->
                         <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/vmware-esxi.svg" alt="ESXi">
                         <span>ESXi</span>
                     </div>
-                    <div class="tech-item" title="Docker">
+                    <div class="tech-item" title="Docker"
+                        data-description="Plateforme de conteneurisation légère. Permet de déployer des applications isolées avec leurs dépendances, facilitant le DevOps et la portabilité.">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
                             alt="Docker">
                         <span>Docker</span>
                     </div>
-                    <div class="tech-item" title="Java">
+                    <div class="tech-item" title="Java"
+                        data-description="Langage de programmation orienté objet robuste. Utilisé ici pour le développement de plugins Minecraft et d'applications backend performantes.">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
                         <span>Java</span>
                     </div>
-                    <div class="tech-item" title="JavaScript">
+                    <div class="tech-item" title="JavaScript"
+                        data-description="Langage de script incontournable du Web. Utilisé pour le dynamisme front-end, les animations (Matrix, Glitch) et le scripting côté navigateur.">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
                             alt="JS">
                         <span>JS</span>
                     </div>
-                    <div class="tech-item" title="Apache">
+                    <div class="tech-item" title="Apache"
+                        data-description="Serveur Web HTTP fiable et sécurisé. Héberge des sites statiques et dynamiques, gère les redirections et les certificats SSL/TLS.">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg"
                             alt="Apache" style="filter: brightness(0) invert(1);">
                         <span>Apache</span>
                     </div>
-                    <div class="tech-item" title="Node.js">
+                    <div class="tech-item" title="Node.js"
+                        data-description="Environnement d'exécution JavaScript côté serveur. Idéal pour les applications temps réel, les API REST et l'outillage DevOps.">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
                             alt="Node.js">
                         <span>Node</span>
                     </div>
-                    <div class="tech-item" title="pfSense">
+                    <div class="tech-item" title="pfSense"
+                        data-description="Système firewall Open Source basé sur FreeBSD. Supporte de nombreux addons (Snort, pfBlockerNG) pour devenir un IPS complet.">
                         <img src="https://cdn.jsdelivr.net/gh/loganmarchione/homelab-svg-assets/assets/pfsense-blue.svg"
                             alt="pfSense">
                         <span>pfSense</span>
                     </div>
-                    <div class="tech-item" title="Apache Guacamole">
+                    <div class="tech-item" title="Apache Guacamole"
+                        data-description="Passerelle d'accès distant sans client. Permet d'accéder à des machines (RDP, SSH, VNC) directement depuis un navigateur web.">
                         <i class="fas fa-desktop" style="font-size: 3rem; color: #fff;"></i>
                         <span>Guacamole</span>
                     </div>
-                    <div class="tech-item" title="Pterodactyl">
+                    <div class="tech-item" title="Pterodactyl"
+                        data-description="Panel de gestion de serveurs de jeux open-source. Sécurise et Isole les instances de jeux via Docker.">
                         <i class="fas fa-feather-alt" style="font-size: 3rem; color: #4b67d9;"></i>
                         <span>Pterodactyl</span>
                     </div>
-                    <div class="tech-item" title="Electron">
+                    <div class="tech-item" title="Electron"
+                        data-description="Framework pour créer des applications desktop multiplateformes avec des technologies web (JS, HTML, CSS).">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"
                             alt="Electron">
                         <span>Electron</span>

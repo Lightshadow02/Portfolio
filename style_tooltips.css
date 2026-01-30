@@ -1,0 +1,52 @@
+/* Tooltips for Tech Items */
+.tech-item {
+    position: relative;
+    /* Ensure tooltip is positioned relative to item */
+}
+
+.tech-item::after {
+    content: attr(data-description);
+    position: absolute;
+    bottom: 120%;
+    /* Position above the item */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    background: rgba(5, 5, 5, 0.95);
+    border: 1px solid var(--accent-primary);
+    color: #eee;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+    /* Glossy/Cyber effect */
+}
+
+/* Arrow for the tooltip */
+.tech-item::before {
+    content: '';
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: var(--accent-primary) transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+}
+
+.tech-item:hover::after,
+.tech-item:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
