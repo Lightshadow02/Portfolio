@@ -1,52 +1,58 @@
-/* Tooltips for Tech Items */
-.tech-item {
-    position: relative;
-    /* Ensure tooltip is positioned relative to item */
-}
-
-.tech-item::after {
-    content: attr(data-description);
-    position: absolute;
-    bottom: 120%;
-    /* Position above the item */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
-    background: rgba(5, 5, 5, 0.95);
+/* Dynamic Cyber Tooltip (JS Controlled) */
+.cyber-tooltip {
+    position: fixed;
+    background: rgba(5, 10, 20, 0.98);
     border: 1px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
     color: #eee;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 0.85rem;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
     font-family: var(--font-mono);
-    text-align: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+    max-width: 300px;
+    line-height: 1.5;
+    z-index: 99999;
+    /* Always on top */
     pointer-events: none;
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-    /* Glossy/Cyber effect */
+    backdrop-filter: blur(8px);
+
+    /* Reveal Animation */
+    animation: tooltipGlitch 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* Arrow for the tooltip */
-.tech-item::before {
+@keyframes tooltipGlitch {
+    0% {
+        opacity: 0;
+        clip-path: inset(50% 0 50% 0);
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+        transform: scale(1);
+    }
+}
+
+/* Optional: Add a 'corner' accent */
+.cyber-tooltip::before {
     content: '';
     position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 8px;
-    border-style: solid;
-    border-color: var(--accent-primary) transparent transparent transparent;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-    z-index: 1000;
+    top: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--accent-secondary);
+    border-left: 2px solid var(--accent-secondary);
 }
 
-.tech-item:hover::after,
-.tech-item:hover::before {
-    opacity: 1;
-    visibility: visible;
+.cyber-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid var(--accent-secondary);
+    border-right: 2px solid var(--accent-secondary);
 }
