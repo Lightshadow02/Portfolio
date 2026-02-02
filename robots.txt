@@ -1,0 +1,11 @@
+# robots.txt pour Hugo Loureiro Portfolio
+# Site: https://hloureiro.fr
+
+User-agent: *
+Allow: /
+
+# Désactive l'indexation des fichiers de sync et outils
+Disallow: /sync-projects.html
+
+# Sitemap
+Sitemap: https://hloureiro.fr/sitemap.xml

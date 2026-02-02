@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00f3ff">
     <title>Hugo Loureiro | Cyber Core Portfolio</title>
     <meta name="description"
         content="Portfolio de Hugo Loureiro - Étudiant Master Cyber & Réseaux, Alternant Support IT. Expert en cybersécurité, administration système et automatisation.">
     <meta name="author" content="Hugo Loureiro">
     <meta name="keywords" content="Hugo Loureiro, cybersécurité, réseaux, DevOps, portfolio, administration système, pentesting, Proxmox, Docker, pfSense">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://api.github.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https: data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com;">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Hugo Loureiro | Cyber Core Portfolio">
@@ -17,13 +21,18 @@
     <meta property="og:url" content="https://hloureiro.fr">
     <meta property="og:site_name" content="Hugo Loureiro Portfolio">
     <meta property="og:locale" content="fr_FR">
-    <!-- Add an og:image when you have a preview image: <meta property="og:image" content="https://hloureiro.fr/assets/preview.png"> -->
+    <!-- Décommenter quand preview.png est créé -->
+    <!-- <meta property="og:image" content="https://hloureiro.fr/assets/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png"> -->
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hugo Loureiro | Cyber Core Portfolio">
     <meta name="twitter:description" content="Portfolio de Hugo Loureiro - Étudiant Master Cyber & Réseaux, Alternant Support IT.">
-    <!-- Add twitter:image when available: <meta name="twitter:image" content="https://hloureiro.fr/assets/preview.png"> -->
+    <!-- Décommenter quand preview.png est créé -->
+    <!-- <meta name="twitter:image" content="https://hloureiro.fr/assets/preview.png"> -->
 
     <!-- Favicon (Add your favicon file to the root directory) -->
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -31,7 +40,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> -->
 
     <!-- Canonical URL -->
-    <meta name="canonical" content="https://hloureiro.fr">
+    <link rel="canonical" href="https://hloureiro.fr">
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_homelab.css">
@@ -43,7 +52,52 @@
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;700&family=Press+Start+2P&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Hugo Loureiro",
+        "url": "https://hloureiro.fr",
+        "image": "https://hloureiro.fr/assets/preview.png",
+        "jobTitle": "Étudiant Master Cyber & Réseaux",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "IVECO"
+        },
+        "alumniOf": [
+            {
+                "@type": "EducationalOrganization",
+                "name": "DataScience Paris"
+            },
+            {
+                "@type": "EducationalOrganization",
+                "name": "IUT Nord R&T Montbéliard"
+            }
+        ],
+        "description": "Expert en cybersécurité, administration système et automatisation. Spécialisé en réseaux, virtualisation (Proxmox, ESXi), sécurité (pfSense) et DevOps.",
+        "knowsAbout": [
+            "Cybersécurité",
+            "Réseaux",
+            "DevOps",
+            "Administration Système",
+            "Pentesting",
+            "Proxmox",
+            "Docker",
+            "pfSense",
+            "ESXi",
+            "Linux",
+            "Windows Server"
+        ],
+        "sameAs": [
+            "https://www.linkedin.com/in/hugo-loureiro-5b3b1b1b3/",
+            "https://github.com/Lightshadow02",
+            "https://linktr.ee/LOUREIROH"
+        ]
+    }
+    </script>
 </head>
 
 <body>
