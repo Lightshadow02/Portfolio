@@ -2,82 +2,106 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/Status-V2%20Cyber%20Core-success?style=for-the-badge&logo=dependabot&logoColor=white&color=00f3ff">
-  <img src="https://img.shields.io/badge/Stack-HTML%20%2F%20CSS%20%2F%20JS-orange?style=for-the-badge&logo=html5&logoColor=white&color=39ff14">
+  <img src="https://img.shields.io/badge/Role-Cyber%20Security%20Engineer-blue?style=for-the-badge&logo=security&logoColor=white&color=0051ff">
+  <img src="https://img.shields.io/badge/Stack-HTML5%20%2F%20CSS3%20%2F%20JS-orange?style=for-the-badge&logo=html5&logoColor=white&color=39ff14">
 </div>
 
 <br>
 
-Bienvenue sur le dépôt de mon **Portfolio Personnel V2**.
-Ce site vitrine a été entièrement repensé avec une esthétique **"Cyber Core / Hacker"** pour immersivement présenter mon profil d'Ingénieur Cybersécurité & Réseaux.
+## 🌐 Présentation
 
-🌐 **En ligne :** [hloureiro.fr](https://hloureiro.fr)
+Bienvenue sur la **V2 de mon Portfolio Personnel**.
+Ce projet est une vitrine technique conçue pour refléter mon identité d'**Ingénieur Cybersécurité & Réseaux**. L'interface a été entièrement développée avec une esthétique **"Cyber Core / Hacker"**, plongeant l'utilisateur dans un univers immersif inspiré des terminaux Linux et du Cyberpunk.
+
+👉 **Version en ligne :** [hloureiro.fr](https://hloureiro.fr)
 
 ---
 
-## 🎨 Design System "Cyber Core"
+## 🎨 Design System & Esthétique
 
-L'identité visuelle est inspirée de l'univers Cyberpunk et des terminaux Linux, avec une touche "Toxic" :
+L'expérience utilisateur est au cœur de ce portfolio, avec un soin particulier apporté aux détails visuels et aux animations :
 
-*   **Palette** : 
-    *   🔵 `Cyan (#00f3ff)` : Couleur primaire (Tech, Réseau).
-    *   🟢 `Toxic Green (#39ff14)` : Accents agressifs (Hacker, Succès).
-*   **Ambiance** : 
-    *   🖥️ **Matrix Rain** : Arrière-plan animé (Canvas JS).
-    *   📺 **CRT Scanlines** : Effet vieil écran cathodique.
-    *   ⚡ **Glitch & Scramble** : Animations et déchiffrement de texte.
-*   **Composants** : 
-    *   Titres style **HUD** (Head-Up Display).
-    *   Cartes à coins coupés (Clip-path) et bordures techniques.
+*   **Identité Visuelle "Cyber Core"** :
+    *   🔵 **Cyan (`#00f3ff`)** : Symbolisant la technologie et les réseaux.
+    *   🟢 **Toxic Green (`#39ff14`)** : Évoquant le "success" des terminaux et l'univers hacker.
+*   **Effets Immersifs** :
+    *   🖥️ **Matrix Rain** : Arrière-plan dynamique en Canvas JS.
+    *   📺 **CRT Scanlines** : Filtre visuel rappelant les écrans cathodiques rétro.
+    *   ⚡ **Glitch & Scramble** : Animations de texte pour un effet de décryptage en temps réel.
+*   **Composants UI** :
+    *   Design inspiré des **HUD (Head-Up Display)** de science-fiction.
+    *   Cartes stylisées avec effets de survol et bordures techniques.
 
-## 🚀 Fonctionnalités & Contenu
+---
 
-### 1. Hero Section
-Animation d'introduction avec effet **Glitch** sur le nom et sous-titre dynamique.
+## 🚀 Fonctionnalités Clés
 
-### 2. Timeline Parcours
-Rétrospective chronologique complète, de mon Bac Pro à mon Master actuel, en passant par mes expériences chez **Iveco** et **MS Solutions**. Données exactes basées sur mon CV.
+### 1. Hero Section Dynamique
+Une introduction impactante avec des animations de texte "glitch" qui présentent mon profil et mes ambitions.
 
-### 3. Compétences Techniques
-Cartes stylisées regroupant mes expertises :
-*   **Réseaux** : Cisco, Juniper, VPN, Routage.
-*   **Cybersécurité** : Pentesting, SIEM, Firewalling (pfSense, Fortinet).
-*   **Système & Scripting** : Linux, Windows Server, PowerShell, Bash.
+### 2. Timeline Interactive (Parcours)
+Une visualisation claire et chronologique de mon parcours professionnel et académique :
+*   **Expérience Actuelle** : Ingénieur Cybersécurité (Alternance).
+*   **Historique** : De mes débuts en Bac Pro jusqu'à mon Master actuel.
 
-### 4. Projets Dynamiques (API GitHub)
-Intégration automatique via l'API GitHub pour afficher mes **6 dépôts les plus récents** taggués avec le topic `cours`.
-*   Filtre automatique.
-*   Tri par date de mise à jour.
-*   Cartes 3D Flip (recto/verso).
+### 3. Showcase de Compétences
+Une présentation structurée de mes expertises techniques :
+*   **🛡️ Cybersécurité** : Pentesting, SIEM, Firewalls (pfSense, Fortinet).
+*   **🌐 Réseaux** : Architecture Cisco/Juniper, VPNs, Routage dynamique.
+*   **💻 Système & Scripting** : Administration Linux/Windows, PowerShell, Bash.
 
-### 5. Centres d'Intérêt & HomeLab
-*   **Nerysia** : Projet Serveur Minecraft (Infra Cross-Serveur, Dev Java, Web).
-*   **HomeLab** : Serveur Docker, Nextcloud, pfSense @Home.
-*   **Loisirs** : Musculation, Veille IA, Streaming Twitch.
+### 4. Intégration API GitHub
+Les projets présentés sont récupérés **automatiquement** via l'API publique de GitHub :
+*   Affichage des dépôts les plus récents.
+*   Filtrage intelligent pour mettre en avant les projets pertinents.
+*   Cartes interactives avec effet 3D Flip.
 
-## �️ Installation & Tests
+### 5. HomeLab & Projets Personnels
+Une section dédiée à ma passion pour l'auto-hébergement et l'infrastructure :
+*   **Nerysia** : Infrastructure de serveurs de jeux avec haute disponibilité.
+*   **HomeLab** : Environnement de test personnel (Proxmox, Docker, Nextcloud).
 
-Pour tester ce projet en local :
+---
 
-```bash
-# 1. Cloner le dépôt
-git clone https://github.com/Lightshadow02/Portfolio.git
+## 🛠️ Stack Technique
 
-# 2. Ouvrir le dossier
-cd Portfolio
+Ce portfolio est construit sans framework lourd pour garantir performance et maîtrise du code :
 
-# 3. Lancer (Double-cliquer sur index.html ou utiliser Live Server)
-code .
-```
+| Categorie | Technologies |
+| :--- | :--- |
+| **Front-End** | HTML5, CSS3 (Variables, Flexbox/Grid), Vanilla JavaScript (ES6+) |
+| **Animation** | HTML5 Canvas (Matrix Effect), CSS Keyframes |
+| **Données** | GitHub REST API |
+| **Hébergement** | *Self-Hosted* / VPS Linux |
 
-*Aucun build system (npm/webpack) n'est nécessaire. C'est du pure Vanilla JS/CSS.*
+---
+
+## 🏗️ Installation & Développement Local
+
+Si vous souhaitez explorer le code source ou tester le projet localement :
+
+1.  **Cloner le dépôt :**
+    ```bash
+    git clone https://github.com/Lightshadow02/Portfolio.git
+    cd Portfolio
+    ```
+
+2.  **Lancer le projet :**
+    *   Ouvrez simplement `index.html` dans votre navigateur.
+    *   *Optionnel* : Utilisez l'extension "Live Server" de VS Code pour le rechargement à chaud.
+
+*Aucune étape de build (npm install, webpack, etc.) n'est requise. Pure Vanilla.*
 
 ---
 
 ## 📞 Contact
 
-*   **Linktree** : [linktr.ee/LOUREIROH](https://linktr.ee/LOUREIROH)
-*   **LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/hugo-loureiro035/)
-*   **GitHub** : [@Lightshadow02](https://github.com/Lightshadow02)
+*   **🌐 Linktree** : [linktr.ee/LOUREIROH](https://linktr.ee/LOUREIROH)
+*   **👔 LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/hugo-loureiro035/)
+*   **🐙 GitHub** : [@Lightshadow02](https://github.com/Lightshadow02)
 
 ---
-*© 2024 Hugo Loureiro - Construit avec passion & néons.*
+
+<div align="center">
+  <i>© 2026 Hugo Loureiro - Développé avec passion.</i>
+</div>

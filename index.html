@@ -6,7 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hugo Loureiro | Cyber Core Portfolio</title>
     <meta name="description"
-        content="Portfolio de Hugo Loureiro - Étudiant Master Cyber & Réseaux, Alternant Support IT.">
+        content="Portfolio de Hugo Loureiro - Étudiant Master Cyber & Réseaux, Alternant Support IT. Expert en cybersécurité, administration système et automatisation.">
+    <meta name="author" content="Hugo Loureiro">
+    <meta name="keywords" content="Hugo Loureiro, cybersécurité, réseaux, DevOps, portfolio, administration système, pentesting, Proxmox, Docker, pfSense">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Hugo Loureiro | Cyber Core Portfolio">
+    <meta property="og:description" content="Portfolio de Hugo Loureiro - Étudiant Master Cyber & Réseaux, Alternant Support IT. Expert en cybersécurité, administration système et automatisation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hloureiro.fr">
+    <meta property="og:site_name" content="Hugo Loureiro Portfolio">
+    <meta property="og:locale" content="fr_FR">
+    <!-- Add an og:image when you have a preview image: <meta property="og:image" content="https://hloureiro.fr/assets/preview.png"> -->
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hugo Loureiro | Cyber Core Portfolio">
+    <meta name="twitter:description" content="Portfolio de Hugo Loureiro - Étudiant Master Cyber & Réseaux, Alternant Support IT.">
+    <!-- Add twitter:image when available: <meta name="twitter:image" content="https://hloureiro.fr/assets/preview.png"> -->
+
+    <!-- Favicon (Add your favicon file to the root directory) -->
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> -->
+
+    <!-- Canonical URL -->
+    <meta name="canonical" content="https://hloureiro.fr">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_homelab.css">
     <link rel="stylesheet" href="style_github_btn.css">
@@ -23,20 +49,20 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">&lt;HL /&gt;</div>
-        <ul class="nav-links">
-            <li><a href="#hero">Accueil</a></li>
-            <li><a href="#parcours">Parcours</a></li>
-            <li><a href="#competences">Compétences</a></li>
-            <li><a href="#projets">Projets</a></li>
-            <li><a href="#interets">Intérêts</a></li>
+    <nav class="navbar" role="navigation" aria-label="Navigation principale">
+        <div class="logo" aria-label="Logo Hugo Loureiro">&lt;HL /&gt;</div>
+        <ul class="nav-links" role="menubar">
+            <li role="none"><a href="#hero" role="menuitem">Accueil</a></li>
+            <li role="none"><a href="#parcours" role="menuitem">Parcours</a></li>
+            <li role="none"><a href="#competences" role="menuitem">Compétences</a></li>
+            <li role="none"><a href="#projets" role="menuitem">Projets</a></li>
+            <li role="none"><a href="#interets" role="menuitem">Intérêts</a></li>
         </ul>
-        <div class="burger">
+        <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
             <div class="line1"></div>
             <div class="line2"></div>
             <div class="line3"></div>
-        </div>
+        </button>
     </nav>
 
     <!-- Background Matrix -->
@@ -45,7 +71,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
         <div class="hero-content">
-            <h1 class="glitch" data-text="Hugo LOUREIRO">Hugo LOUREIRO</h1>
+            <h1 class="hero-title"></h1>
             <h2><span class="highlight">Master Cyber & Réseaux</span> | Alternance IT</h2>
             <p>Passionné par la cybersécurité, l'administration système et l'automatisation.</p>
             <div class="hero-buttons">
@@ -312,10 +338,14 @@
                 <a href="https://github.com/Lightshadow02" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="mailto:contact@hloureiro.fr"><i class="fas fa-envelope"></i></a>
             </div>
-            <p>&copy; 2024 Hugo Loureiro. All rights reserved.</p>
+            <p>&copy; 2026 Hugo Loureiro. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+    <!-- Local projects data -->
+    <script src="projects-data.js"></script>
     <script src="script.js"></script>
     <script src="script2_effects.js"></script>
     <script src="script_tooltips.js"></script>
