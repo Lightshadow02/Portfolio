@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00f3ff">
+    <title>HomeLab Proxmox | Hugo Loureiro</title>
+    <meta name="description"
+        content="HomeLab de Hugo Loureiro : infrastructure de type PME sous Proxmox VE. pfSense, Snort IPS, pfBlockerNG, segmentation, WireGuard, DNS split-horizon DNSSEC, Prometheus/Grafana/Loki, Proxmox Backup Server.">
+    <meta name="author" content="Hugo Loureiro">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https: data:; connect-src 'self';">
+
+    <meta property="og:title" content="HomeLab Proxmox | Hugo Loureiro">
+    <meta property="og:description" content="Infrastructure virtualisée et sécurisée sous Proxmox VE : pare-feu et IPS, zones réseau, VPN, supervision et sauvegardes vérifiées.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://hloureiro.fr/homelab.html">
+    <meta property="og:locale" content="fr_FR">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="canonical" href="https://hloureiro.fr/homelab.html">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_homelab_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body class="hl-page">
+
+    <nav class="navbar" aria-label="Navigation">
+        <a href="index.html" class="logo" aria-label="Retour à l'accueil">&lt;HL /&gt;</a>
+        <ul class="hl-nav">
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#securite">Sécurité</a></li>
+            <li><a href="#exploitation">Exploitation</a></li>
+            <li><a href="#historique">Historique</a></li>
+            <li><a href="index.html#interets" class="hl-back"><i class="fas fa-arrow-left"></i> Portfolio</a></li>
+        </ul>
+    </nav>
+
+    <canvas id="matrix-bg"></canvas>
+
+    <main>
+        <!-- En-tête -->
+        <header class="section hl-hero">
+            <p class="hl-kicker"><i class="fas fa-server"></i> Projet personnel · en production depuis 2021</p>
+            <h1>HomeLab — Infrastructure virtualisée et sécurisée sous <span class="highlight">Proxmox VE</span></h1>
+            <p class="hl-lead">
+                Un serveur unique qui fait tourner <strong>une infrastructure complète de type PME</strong> :
+                pare-feu et IPS virtualisés, zones réseau séparées, VPN, reverse proxy TLS, services collaboratifs,
+                téléphonie IP, supervision centralisée avec alertes, et sauvegardes dédupliquées et vérifiées.
+                Il héberge des services utilisés au quotidien, dont une cinquantaine de comptes sur le serveur multimédia.
+            </p>
+            <div class="hl-actions">
+                <a href="https://github.com/Lightshadow02/HomeLab" target="_blank" rel="noopener" class="btn primary-btn"><i class="fab fa-github"></i> Documentation et configurations</a>
+                <a href="https://github.com/Lightshadow02/baszel-snmp-bridge" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fas fa-plug"></i> Projet associé : pont SNMP</a>
+            </div>
+
+            <div class="homelab-stats hl-stats">
+                <div><b>Ryzen 9 · 96 Go</b><span>24 threads · NVMe 2 To + HDD 2 To</span></div>
+                <div><b>2 VM + 7 LXC</b><span>invités en service</span></div>
+                <div><b>35+</b><span>conteneurs Docker</span></div>
+                <div><b>21</b><span>hôtes HTTPS, dont 14 réservés LAN/VPN</span></div>
+                <div><b>121</b><span>règles pare-feu pfSense</span></div>
+                <div><b>≈ 352 000</b><span>domaines en liste de blocage</span></div>
+                <div><b>≈ 100 000 / j</b><span>connexions malveillantes bloquées</span></div>
+                <div><b>33,6 To</b><span>de stockage réseau (2 NAS)</span></div>
+            </div>
+            <p class="hl-note">Chiffres relevés le 5 novembre 2026, par un inventaire en lecture seule de l'infrastructure.</p>
+        </header>
+
+        <!-- Architecture -->
+        <section id="architecture" class="section">
+            <h2 class="section-title">Architecture</h2>
+
+            <div class="hl-diagram" role="img" aria-label="Schéma : Internet, box FAI, pfSense dans Proxmox, puis trois zones : LAN des services, zone isolée Cloud, VLAN de stockage relié aux deux NAS.">
+                <div class="hl-row">
+                    <div class="hl-node hl-ext"><i class="fas fa-globe"></i> Internet</div>
+                    <div class="hl-arrow">→</div>
+                    <div class="hl-node hl-ext"><i class="fas fa-wifi"></i> Box FAI<small>double NAT</small></div>
+                    <div class="hl-arrow">→</div>
+                    <div class="hl-node hl-fw"><i class="fas fa-shield-alt"></i> pfSense 2.8 (VM)<small>Pare-feu · NAT · Snort IPS · pfBlockerNG · Unbound</small></div>
+                </div>
+                <div class="hl-host">
+                    <div class="hl-host-title"><i class="fas fa-cubes"></i> Proxmox VE 9.2 · nœud unique</div>
+                    <div class="hl-zones">
+                        <div class="hl-zone hl-zone-lan">
+                            <h4>LAN · services</h4>
+                            <code>192.168.1.0/24</code>
+                            <ul>
+                                <li>Reverse proxy TLS + VPN WireGuard</li>
+                                <li>Supervision Prometheus · Grafana · Loki</li>
+                                <li>Jellyfin</li>
+                                <li>Bureau KDE par navigateur</li>
+                                <li>Proxmox Backup Server</li>
+                                <li>IPBX Asterisk (VM)</li>
+                                <li>Poste d'administration</li>
+                            </ul>
+                        </div>
+                        <div class="hl-zone hl-zone-cloud">
+                            <h4>Zone isolée · Cloud</h4>
+                            <code>10.0.0.0/24</code>
+                            <ul>
+                                <li>Nextcloud seul</li>
+                                <li>Talk HPB · TURN · ClamAV</li>
+                                <li>Redis · MariaDB interne</li>
+                            </ul>
+                        </div>
+                        <div class="hl-zone hl-zone-sto">
+                            <h4>VLAN 70 · stockage</h4>
+                            <code>192.168.70.0/24</code>
+                            <ul>
+                                <li>Carte réseau physique dédiée</li>
+                                <li>NAS médias · NFS v4.1 · 22 To</li>
+                                <li>Buffalo TeraStation · NFS v3 · 11,6 To</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="hl-diagram-note"><i class="fas fa-lock"></i> Accès d'administration à distance uniquement par <strong>WireGuard</strong> (51820/udp). Depuis Internet, seuls le reverse proxy (80/443), le VPN, la téléphonie et le TURN sont publiés.</p>
+            </div>
+
+            <h3 class="hl-h3">Machines virtuelles et conteneurs</h3>
+            <div class="hl-table-wrap">
+                <table class="hl-table">
+                    <thead>
+                        <tr><th>ID</th><th>Nom</th><th>Type</th><th>Rôle</th><th>Ressources</th><th>Zone</th><th>Exposé</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>100</td><td>PF</td><td>VM</td><td>Routeur, pare-feu, IPS, DNS (pfSense 2.8.1)</td><td>2 Go · 32 Go</td><td>WAN · LAN · OPT1 · VLAN70</td><td class="ok">Périmètre</td></tr>
+                        <tr><td>600</td><td>VOIP</td><td>VM</td><td>Téléphonie IP (Asterisk)</td><td>2 Go · 32 Go</td><td>LAN</td><td class="ok">SIP/RTP</td></tr>
+                        <tr><td>101</td><td>Docker-EXT</td><td>LXC</td><td>Reverse proxy TLS, VPN WireGuard</td><td>4 Go · 20 Go</td><td>LAN</td><td class="ok">80/443 · 51820</td></tr>
+                        <tr><td>102</td><td>Docker</td><td>LXC</td><td>Supervision, tableau de bord, gestion Docker</td><td>6 Go · 130 Go</td><td>LAN</td><td class="no">LAN/VPN</td></tr>
+                        <tr><td>104</td><td>JELLYFIN</td><td>LXC</td><td>Serveur multimédia</td><td>8 Go · 50 Go</td><td>LAN</td><td class="ok">via proxy</td></tr>
+                        <tr><td>105</td><td>NEXTCLOUD</td><td>LXC</td><td>Cloud privé, visio, tableau blanc</td><td>4 Go · 32 Go + NFS</td><td><strong>OPT1 isolée</strong></td><td class="ok">via proxy + TURN</td></tr>
+                        <tr><td>106</td><td>BUREAU</td><td>LXC</td><td>Bureau KDE Plasma dans le navigateur</td><td>8 vCPU · 8 Go</td><td>LAN</td><td class="no">LAN/VPN</td></tr>
+                        <tr><td>107</td><td>PBS</td><td>LXC</td><td>Proxmox Backup Server 4.2</td><td>8 vCPU · 4 Go</td><td>LAN + VLAN70</td><td class="no">LAN/VPN</td></tr>
+                        <tr><td>998</td><td>Admin</td><td>LXC</td><td>Poste d'administration et d'automatisation</td><td>4 Go · 32 Go</td><td>LAN</td><td class="no">Non</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="hl-note">Tous les conteneurs LXC sont <strong>non privilégiés</strong>. Quelques machines personnelles ou hébergées pour des tiers ne sont volontairement pas présentées.</p>
+
+            <h3 class="hl-h3">Matrice des flux entre zones</h3>
+            <div class="hl-table-wrap">
+                <table class="hl-table hl-matrix">
+                    <thead>
+                        <tr><th>Source ↓ / Destination →</th><th>LAN</th><th>Cloud (OPT1)</th><th>Stockage (VLAN70)</th><th>Internet</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>Internet</th><td>80/443 → reverse proxy · VPN · SIP/RTP → IPBX</td><td>via reverse proxy · TURN</td><td class="no">Refusé</td><td>—</td></tr>
+                        <tr><th>VPN</th><td class="ok">Administration</td><td>via reverse proxy</td><td class="no">Refusé</td><td class="ok">Oui</td></tr>
+                        <tr><th>LAN</th><td class="ok">Oui</td><td>via reverse proxy</td><td>Hôte Proxmox et PBS seulement</td><td class="ok">Oui, filtré DNSBL</td></tr>
+                        <tr><th>Cloud (OPT1)</th><td class="no">Refusé</td><td>—</td><td class="no">Refusé (monté par l'hôte)</td><td class="ok">Oui</td></tr>
+                        <tr><th>Stockage</th><td class="no">Refusé</td><td class="no">Refusé</td><td>—</td><td class="no">Refusé</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sécurité -->
+        <section id="securite" class="section">
+            <h2 class="section-title">Sécurité</h2>
+            <p class="hl-intro">Une approche <strong>défense en profondeur</strong> : chaque couche part du principe que la précédente peut céder.</p>
+
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-shield-alt"></i> Périmètre</h3>
+                    <p>pfSense virtualisé en <strong>refus par défaut</strong>. Seuls 80/443, le VPN, la VoIP et le TURN sont publiés. 121 règles documentées.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-eye"></i> Détection et prévention</h3>
+                    <p><strong>Snort</strong> sur le WAN en <strong>mode blocage</strong> (règles Community + ET Open, politique IPS « security »). Blocage de la source pendant 1 h, liste de suppression pour les faux positifs.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-ban"></i> Réputation et DNS</h3>
+                    <p><strong>pfBlockerNG</strong> : listes d'IP mises à jour chaque jour et <strong>DNSBL d'environ 352 000 domaines</strong> (publicité, malware, phishing : HaGeZi TIF, Phishing Army, URLhaus), pour tous les clients, VPN compris.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-project-diagram"></i> Segmentation</h3>
+                    <p>Le cloud exposé (Nextcloud) est <strong>isolé dans sa propre zone</strong>. Le stockage passe par une <strong>interface physique dédiée</strong>, non routée.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-lock"></i> Accès distant</h3>
+                    <p><strong>WireGuard</strong> (5 pairs). Aucune console d'administration n'est exposée : elles passent par le reverse proxy avec une liste d'accès <code>LAN + VPN</code> puis <code>deny all</code>.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-box"></i> Isolation</h3>
+                    <p><strong>LXC non privilégiés</strong> partout, montages NAS en <strong>lecture seule</strong> pour les services qui n'ont besoin que de lire. Nextcloud : antivirus <strong>ClamAV</strong>, base MariaDB sur un réseau Docker interne.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-file-alt"></i> Journalisation</h3>
+                    <p>Les journaux pfSense, Snort et pfBlockerNG sont centralisés dans <strong>Loki</strong>, avec des tableaux de bord et des alertes Grafana.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-bug"></i> Gestion des vulnérabilités</h3>
+                    <p>Faille PHP critique (oct. 2026) : inventaire, priorisation, <strong>répétition sur un clone</strong> de la production, sauvegarde, tests avant/après. La répétition a révélé une régression <strong>avant</strong> la mise en production.</p>
+                </article>
+            </div>
+
+            <h3 class="hl-h3">DNS local split-horizon et certificats TLS</h3>
+            <div class="hl-split">
+                <div>
+                    <p>Tous les services ont un nom de domaine, mais le DNS a <strong>deux vues</strong> :</p>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-globe"></i> <strong>Services publics</strong> (cloud, médias) : résolus par le DNS public, puis box → pfSense → reverse proxy.</li>
+                        <li><i class="fas fa-user-lock"></i> <strong>Consoles internes</strong> (Proxmox, PBS, Grafana, VPN, bureau…) : <strong>absentes du DNS public</strong>. 15 substitutions locales dans Unbound les font pointer vers l'adresse privée du reverse proxy.</li>
+                        <li><i class="fas fa-check-double"></i> <strong>Unbound</strong> en résolution récursive complète, avec <strong>validation DNSSEC</strong> vérifiée (drapeau <code>ad</code>, domaine mal signé refusé en <code>SERVFAIL</code>).</li>
+                    </ul>
+                </div>
+                <div>
+                    <p>Tout le trafic web passe en <strong>HTTPS</strong> (Let's Encrypt via Nginx Proxy Manager, renouvellement automatique) :</p>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-asterisk"></i> Consoles internes (14 hôtes) : un <strong>certificat wildcard</strong> obtenu par <strong>challenge DNS-01</strong>. Les journaux publics de Certificate Transparency ne révèlent donc pas leurs noms.</li>
+                        <li><i class="fas fa-certificate"></i> Services publics (7 hôtes) : un certificat par nom, en HTTP-01.</li>
+                        <li><i class="fas fa-key"></i> Clés <strong>ECDSA P-384</strong>, HTTPS forcé et « Block common exploits » sur les 21 hôtes, HSTS sur Nextcloud.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <figure class="homelab-figure">
+                <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-pfblockerng.png" alt="Tableau de bord Grafana pfBlockerNG : adresses IP et domaines bloqués sur 24 heures" loading="lazy">
+                <figcaption>pfBlockerNG dans Grafana : environ 100 000 connexions malveillantes bloquées en 24 h, depuis environ 900 adresses différentes.</figcaption>
+            </figure>
+        </section>
+
+        <!-- Exploitation -->
+        <section id="exploitation" class="section">
+            <h2 class="section-title">Exploitation</h2>
+
+            <div class="hl-split">
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-chart-line"></i> Supervision</h3>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-layer-group"></i> <strong>Prometheus, Grafana, Loki et Alloy</strong>, avec les exporters node, Proxmox, SNMP (NAS) et blackbox (ping de toutes les machines).</li>
+                        <li><i class="fas fa-tachometer-alt"></i> Tableaux de bord : vue globale, Proxmox, hôte, pfSense, pfBlockerNG, sécurité.</li>
+                        <li><i class="fas fa-bell"></i> <strong>Alertes rédigées en français</strong> (résumé, cause probable, action à mener), envoyées sur téléphone via <strong>ntfy</strong>. Canal séparé pour les mises à jour.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-database"></i> Sauvegardes</h3>
+<pre class="hl-pre">01:00   vzdump → Proxmox Backup Server (toutes les machines)
+        └─ datastore « buffalo » (NAS, NFS)      copie 1
+04:00   sync PBS → datastore « hdd » (disque 2 To) copie 2
+Dim.    vérification d'intégrité des deux datastores
+Rétention  7 quotidiennes · 4 hebdo · 6 mensuelles
+Échec   notification ntfy immédiate</pre>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-compress-alt"></i> <strong>Déduplication</strong> : environ 2 To sauvegardés n'occupent qu'environ 216 Go.</li>
+                        <li><i class="fas fa-undo"></i> <strong>Restauration testée</strong> : conteneur complet restauré sous un nouvel ID, vérifié, puis supprimé.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hl-figures">
+                <figure class="homelab-figure">
+                    <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-hote.png" alt="Tableau de bord Grafana de l'hôte Proxmox : CPU, mémoire, températures et stockages" loading="lazy">
+                    <figcaption>Supervision de l'hôte Proxmox dans Grafana (24 h).</figcaption>
+                </figure>
+                <figure class="homelab-figure">
+                    <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/pbs-sauvegardes.png" alt="Grille des sauvegardes Proxmox Backup Server sur 30 jours" loading="lazy">
+                    <figcaption>Sauvegardes sur 30 jours : une case par jour et par machine.</figcaption>
+                </figure>
+            </div>
+
+            <h3 class="hl-h3">Matériel</h3>
+            <div class="hl-table-wrap">
+                <table class="hl-table">
+                    <tbody>
+                        <tr><th>Processeur</th><td>AMD Ryzen 9 5900X · 12 cœurs / 24 threads</td></tr>
+                        <tr><th>Mémoire</th><td>96 Go DDR4</td></tr>
+                        <tr><th>Stockage</th><td>NVMe Samsung 990 EVO 2 To (VM et conteneurs, LVM-thin) · HDD 2 To (seconde copie des sauvegardes)</td></tr>
+                        <tr><th>Réseau</th><td>2 ports 1 GbE : un pour le WAN, un dédié au stockage</td></tr>
+                        <tr><th>NAS</th><td>NAS médias 22 To (NFS v4.1) · Buffalo TeraStation 11,6 To (NFS v3)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Historique -->
+        <section id="historique" class="section">
+            <h2 class="section-title">Historique &amp; leçons</h2>
+
+            <ol class="hl-timeline">
+                <li><span>2021</span> Raspberry Pi : premiers services, en 1<sup>re</sup> année de BTS.</li>
+                <li><span>2022</span> PC Intel Core i5 sous Hyper-V : premier vrai serveur, découverte de la virtualisation.</li>
+                <li><span>2023</span> Serveur Ryzen 9 sous Proxmox VE : VM et conteneurs, montée en puissance.</li>
+                <li><span>2024–2026</span> Docker, Pterodactyl, pfSense, Proxmox Backup Server, puis supervision Grafana.</li>
+                <li><span>Oct.–nov. 2026</span> Beszel → Prometheus/Grafana/Loki, SMB → NFS, vzdump → PBS avec seconde copie, Guacamole → bureau KDE, DNSBL anti-malware.</li>
+            </ol>
+
+            <h3 class="hl-h3">Incidents et ce que j'en ai appris</h3>
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-eye-slash"></i> Sept jours sans journaux</h3>
+                    <p>Une commande d'arrêt trop large sur pfSense avait aussi stoppé <code>syslogd</code>. Le filtrage continuait, mais plus rien n'était journalisé. <strong>Leçon : superviser la supervision</strong>. L'absence de données est un signal.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Faux positif Snort</h3>
+                    <p>Snort en blocage avait classé un serveur Google comme scanner. <strong>Leçon</strong> : un IPS en blocage exige une procédure de faux positifs. On supprime la règle précise, sans désactiver la protection.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-user-shield"></i> PBS et conteneur non privilégié</h3>
+                    <p>Permissions NFS incompatibles avec l'UID décalé du conteneur. Solution : une image ext4 sur le NAS, montée en loop par l'hôte. <strong>Leçon</strong> : comprendre le mapping d'UID plutôt que céder au mode privilégié.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-network-wired"></i> SMB peu fiable</h3>
+                    <p>Migration de tous les montages en NFS sur un réseau dédié, et un script qui fait attendre le démarrage des invités tant que les montages ne sont pas prêts. <strong>Leçon</strong> : gérer l'ordre de démarrage.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Compétences & suite -->
+        <section class="section">
+            <h2 class="section-title">Compétences &amp; suite</h2>
+            <div class="hl-split">
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-user-tie"></i> Ce que ça démontre</h3>
+                    <ul class="hl-skills">
+                        <li><b>Sécurité réseau</b> pfSense, zones, refus par défaut, NAT <em>Admin sécurité réseau</em></li>
+                        <li><b>Détection d'intrusion</b> Snort IPS, faux positifs, DNSBL <em>Analyste SOC</em></li>
+                        <li><b>Journalisation</b> syslog → Loki, alertes de sécurité <em>Analyste SOC</em></li>
+                        <li><b>Virtualisation</b> Proxmox VE, VM / LXC, LVM-thin, NFS <em>Admin systèmes</em></li>
+                        <li><b>Sauvegarde / PRA</b> PBS, rétention, restauration testée <em>Admin systèmes</em></li>
+                        <li><b>Vulnérabilités</b> veille CVE, correctifs répétés sur clone <em>SOC / Admin</em></li>
+                        <li><b>Automatisation</b> scripts Python et Bash <em>Admin / DevOps</em></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-road"></i> Limites assumées &amp; prochaines étapes</h3>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-exclamation-circle"></i> <strong>Un seul serveur</strong> : pas de haute disponibilité, et le routeur virtualisé coupe Internet au redémarrage.</li>
+                        <li><i class="fas fa-exclamation-circle"></i> <strong>Pas encore de copie hors site</strong> : la règle 3-2-1 est incomplète.</li>
+                        <li><i class="fas fa-exclamation-circle"></i> Loki centralise et alerte, mais ce n'est <strong>pas encore un SIEM</strong> avec corrélation.</li>
+                        <li><i class="fas fa-arrow-right"></i> Prévu : <strong>SIEM</strong>, <strong>SSO</strong> avec MFA, copie hors site, DMZ séparée de l'administration, alerte sur absence de journaux, filtrage GeoIP de la téléphonie.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hl-actions hl-actions-end">
+                <a href="https://github.com/Lightshadow02/HomeLab" target="_blank" rel="noopener" class="btn primary-btn"><i class="fab fa-github"></i> Toute la documentation sur GitHub</a>
+                <a href="index.html#interets" class="btn secondary-btn"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Hugo LOUREIRO</h3>
+            <div class="socials">
+                <a href="https://www.linkedin.com/in/h-loureiro/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Lightshadow02" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:contact@hloureiro.fr" aria-label="E-mail"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p>&copy; 2026 Hugo Loureiro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script2_effects.js"></script>
+</body>
+
+</html>

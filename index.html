@@ -549,52 +549,25 @@
                         <i class="fas fa-server"></i>
                     </div>
                     <div>
-                        <h3>HomeLab — Infrastructure virtualisée et sécurisée sous Proxmox VE</h3>
-                        <span class="interest-badge">En production · depuis 2021</span>
+                        <h3>HomeLab</h3>
+                        <span class="interest-badge">Infrastructure en production · depuis 2021</span>
                     </div>
                 </div>
                 <p>
-                    Une <strong>infrastructure de type PME</strong> sur un seul serveur, qui tourne 24 h/24 et héberge des services utilisés au quotidien
-                    (cloud privé, visioconférence, serveur multimédia, téléphonie IP).
-                    Je la fais évoluer chaque année depuis ma première année de BTS : d'un Raspberry Pi à un serveur <strong>Ryzen 9</strong> sous <strong>Proxmox VE</strong>.
+                    Une <strong>infrastructure de type PME</strong> sur un serveur Ryzen 9 sous <strong>Proxmox VE</strong> (2 VM, 7 LXC, plus de 35 conteneurs Docker) :
+                    pare-feu <strong>pfSense</strong> avec IPS <strong>Snort</strong> et <strong>pfBlockerNG</strong>, zones réseau séparées, VPN <strong>WireGuard</strong>,
+                    DNS split-horizon avec DNSSEC, supervision <strong>Prometheus · Grafana · Loki</strong> et sauvegardes <strong>Proxmox Backup Server</strong> vérifiées.
                 </p>
-                <div class="homelab-stats">
-                    <div><b>Ryzen 9 · 96 Go</b><span>serveur Proxmox VE 9</span></div>
-                    <div><b>2 VM + 7 LXC</b><span>invités en service</span></div>
-                    <div><b>35+</b><span>conteneurs Docker</span></div>
-                    <div><b>121</b><span>règles pare-feu</span></div>
-                    <div><b>≈ 352 000</b><span>domaines en liste de blocage</span></div>
-                    <div><b>≈ 100 000 / j</b><span>connexions malveillantes bloquées</span></div>
-                </div>
-                <ul class="featured-list">
-                    <li><i class="fas fa-shield-alt"></i> <strong>Périmètre</strong> : pfSense virtualisé en refus par défaut, IPS <strong>Snort</strong> en blocage sur le WAN (Community + ET Open), <strong>pfBlockerNG</strong> (DNSBL et listes d'IP).</li>
-                    <li><i class="fas fa-project-diagram"></i> <strong>Segmentation</strong> : LAN de services, zone <strong>isolée</strong> pour le cloud exposé (Nextcloud), VLAN de stockage sur une interface physique dédiée (NFS vers les NAS).</li>
-                    <li><i class="fas fa-lock"></i> <strong>Accès</strong> : VPN <strong>WireGuard</strong> pour l'administration à distance, <strong>reverse proxy TLS</strong> (Nginx Proxy Manager + Let's Encrypt) ; aucune console d'admin exposée sur Internet. Conteneurs LXC tous non privilégiés.</li>
-                    <li><i class="fas fa-globe"></i> <strong>DNS & TLS</strong> : DNS local <strong>split-horizon</strong> (Unbound, résolution récursive, validation <strong>DNSSEC</strong>) : les consoles internes n'existent pas dans le DNS public. Certificats <strong>Let's Encrypt</strong> ECDSA P-384, wildcard par challenge DNS, HTTPS forcé sur les 21 hôtes.</li>
-                    <li><i class="fas fa-chart-line"></i> <strong>Supervision</strong> : <strong>Prometheus, Grafana et Loki</strong>, journaux du pare-feu centralisés, alertes rédigées en français envoyées sur téléphone.</li>
-                    <li><i class="fas fa-database"></i> <strong>Sauvegardes</strong> : <strong>Proxmox Backup Server</strong> dédupliqué, 2 copies, vérification hebdomadaire, restauration testée.</li>
-                    <li><i class="fas fa-cogs"></i> <strong>Services</strong> : Nextcloud (Talk, TURN, ClamAV), Jellyfin, IPBX Asterisk, bureau KDE par navigateur, scripts d'automatisation Python et Bash.</li>
-                </ul>
-                <figure class="homelab-figure">
-                    <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-pfblockerng.png" alt="Tableau de bord Grafana pfBlockerNG : adresses IP et domaines bloqués sur 24 heures" loading="lazy">
-                    <figcaption>pfBlockerNG dans Grafana : connexions malveillantes et domaines bloqués sur 24 h.</figcaption>
-                </figure>
                 <div class="interest-tags">
                     <span><i class="fas fa-cubes"></i> Proxmox VE</span>
-                    <span><i class="fas fa-shield-alt"></i> pfSense</span>
-                    <span><i class="fas fa-eye"></i> Snort IPS</span>
-                    <span><i class="fas fa-ban"></i> pfBlockerNG</span>
-                    <span><i class="fas fa-globe"></i> Unbound · DNSSEC</span>
+                    <span><i class="fas fa-shield-alt"></i> pfSense · Snort</span>
                     <span><i class="fas fa-lock"></i> WireGuard</span>
                     <span><i class="fab fa-docker"></i> Docker / LXC</span>
-                    <span><i class="fas fa-chart-area"></i> Grafana · Prometheus · Loki</span>
-                    <span><i class="fas fa-database"></i> Proxmox Backup Server</span>
-                    <span><i class="fas fa-cloud"></i> Nextcloud</span>
-                    <span><i class="fas fa-phone-alt"></i> Asterisk</span>
+                    <span><i class="fas fa-chart-area"></i> Grafana · Loki</span>
+                    <span><i class="fas fa-database"></i> PBS</span>
                 </div>
                 <div class="featured-actions">
-                    <a href="https://github.com/Lightshadow02/HomeLab" target="_blank" rel="noopener" class="btn primary-btn"><i class="fab fa-github"></i> Voir la documentation du HomeLab</a>
-                    <a href="https://github.com/Lightshadow02/baszel-snmp-bridge" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fas fa-plug"></i> Projet associé : pont SNMP → Beszel</a>
+                    <a href="homelab.html" class="btn primary-btn"><i class="fas fa-search-plus"></i> Voir le HomeLab en détail</a>
                 </div>
             </div>
 
