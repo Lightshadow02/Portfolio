@@ -1,15 +1,17 @@
-# Déploiement automatique du portfolio sur l'hébergeur (FTP / FTPS)
+# Déploiement automatique du portfolio sur l'hébergeur (SFTP / FTPS / FTP)
 #
 # Se lance à chaque push sur main, ou à la main depuis l'onglet « Actions ».
-# Seuls les fichiers modifiés sont envoyés (un fichier d'état est gardé sur le serveur).
 #
 # À configurer une seule fois dans GitHub :
 #   Settings → Secrets and variables → Actions
-#   - Secrets   : FTP_SERVER   (ex. ftp.exemple.com)
+#   - Secrets   : FTP_SERVER     (ex. ftp.exemple.com, sans ftp:// devant)
 #                 FTP_USERNAME
 #                 FTP_PASSWORD
-#   - Variables : FTP_SERVER_DIR (dossier du site sur le serveur, ex. /web/ ; se termine par /)
-#                 FTP_PROTOCOL   (optionnel : ftps par défaut, ou ftp)
+#   - Variables : FTP_SERVER_DIR (OBLIGATOIRE : dossier du site sur le serveur, ex. /www/)
+#                 FTP_PROTOCOL   (sftp, ftps ou ftp — ftps par défaut)
+#                 FTP_PORT       (optionnel : 22 pour sftp, 21 pour ftp/ftps par défaut)
+#
+# Les fichiers sont envoyés et remplacés ; rien n'est jamais supprimé sur le serveur.
 
 name: Déploiement FTP
 
@@ -18,7 +20,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Un seul déploiement à la fois
 concurrency:
   group: deploy-ftp
   cancel-in-progress: false
@@ -30,23 +31,66 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR }}
+      FTP_PROTOCOL: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+      FTP_PORT: ${{ vars.FTP_PORT }}
     steps:
+      - name: Vérification de la configuration
+        run: |
+          missing=""
+          [ -n "$FTP_SERVER" ]     || missing="$missing secret:FTP_SERVER"
+          [ -n "$FTP_USERNAME" ]   || missing="$missing secret:FTP_USERNAME"
+          [ -n "$LFTP_PASSWORD" ]  || missing="$missing secret:FTP_PASSWORD"
+          [ -n "$FTP_SERVER_DIR" ] || missing="$missing variable:FTP_SERVER_DIR"
+          if [ -n "$missing" ]; then
+            echo "::error::Configuration manquante :$missing (Settings → Secrets and variables → Actions). FTP_SERVER_DIR doit être une *variable*, pas un secret."
+            exit 1
+          fi
+          case "$FTP_PROTOCOL" in
+            sftp|ftps|ftp) ;;
+            *) echo "::error::FTP_PROTOCOL doit valoir sftp, ftps ou ftp (reçu : $FTP_PROTOCOL)"; exit 1 ;;
+          esac
+          if [ "$FTP_PROTOCOL" = "ftp" ]; then
+            echo "::warning::FTP sans chiffrement : le mot de passe circule en clair. Préférez sftp si l'hébergeur le propose."
+          fi
+
       - name: Récupération du code
         uses: actions/checkout@v4
 
-      - name: Envoi sur le serveur FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
-          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
-          # Fichiers du dépôt qui n'ont rien à faire sur le site
-          exclude: |
-            **/.git*
-            **/.git*/**
-            .github/**
-            README.md
-            FAVICON-GUIDE.md
-            **/README.md
+      - name: Installation de lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Préparation des fichiers à publier
+        run: |
+          # Uniquement les fichiers suivis par Git, sans les fichiers internes au dépôt
+          mkdir -p "$RUNNER_TEMP/site"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/site"
+          cd "$RUNNER_TEMP/site"
+          rm -rf .github .gitignore .gitattributes FAVICON-GUIDE.md
+          find . -name README.md -delete
+          echo "Fichiers à publier :"; find . -type f | sort
+
+      - name: Envoi sur le serveur
+        run: |
+          host="${FTP_SERVER#*://}"
+          case "$FTP_PROTOCOL" in
+            sftp) url="sftp://$host" ;;
+            *)    url="ftp://$host" ;;
+          esac
+          [ -n "$FTP_PORT" ] && url="$url:$FTP_PORT"
+
+          case "$FTP_PROTOCOL" in
+            sftp) proto_opts="set sftp:auto-confirm yes;" ;;
+            ftps) proto_opts="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate true;" ;;
+            ftp)  proto_opts="set ftp:ssl-allow false;" ;;
+          esac
+
+          lftp --env-password -u "$FTP_USERNAME" "$url" -e "
+            $proto_opts
+            set net:max-retries 2; set net:timeout 30; set cmd:fail-exit true;
+            mirror --reverse --verbose --parallel=4 '$RUNNER_TEMP/site/' '$FTP_SERVER_DIR';
+            bye"
