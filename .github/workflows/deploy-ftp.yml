@@ -1,0 +1,52 @@
+# Déploiement automatique du portfolio sur l'hébergeur (FTP / FTPS)
+#
+# Se lance à chaque push sur main, ou à la main depuis l'onglet « Actions ».
+# Seuls les fichiers modifiés sont envoyés (un fichier d'état est gardé sur le serveur).
+#
+# À configurer une seule fois dans GitHub :
+#   Settings → Secrets and variables → Actions
+#   - Secrets   : FTP_SERVER   (ex. ftp.exemple.com)
+#                 FTP_USERNAME
+#                 FTP_PASSWORD
+#   - Variables : FTP_SERVER_DIR (dossier du site sur le serveur, ex. /web/ ; se termine par /)
+#                 FTP_PROTOCOL   (optionnel : ftps par défaut, ou ftp)
+
+name: Déploiement FTP
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Un seul déploiement à la fois
+concurrency:
+  group: deploy-ftp
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+      - name: Envoi sur le serveur FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
+          # Fichiers du dépôt qui n'ont rien à faire sur le site
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            README.md
+            FAVICON-GUIDE.md
+            **/README.md

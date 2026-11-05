@@ -1767,3 +1767,152 @@ footer p {
         transform: none;
     }
 }
+
+/* ============================================
+   DISPONIBILITÉ & PROJET PHARE
+   ============================================ */
+.hero-available {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
+    border: 1px solid rgba(57, 255, 20, 0.35);
+    background: rgba(57, 255, 20, 0.06);
+    padding: 0.4rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.available-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent-secondary);
+    box-shadow: var(--green-glow);
+    animation: availablePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes availablePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+.featured-project {
+    border-left: 4px solid var(--accent-primary);
+    margin-bottom: 2.5rem;
+}
+
+.featured-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.2rem;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.featured-list li {
+    color: #bbb;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.featured-list i {
+    color: var(--accent-primary);
+    width: 1.2rem;
+    margin-right: 0.3rem;
+}
+
+.featured-list strong {
+    color: var(--accent-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .available-dot { animation: none; }
+}
+
+/* Empêche le menu mobile hors-écran de créer un scroll horizontal */
+html { overflow-x: clip; }
+
+.featured-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.tl-card p a {
+    color: var(--accent-primary);
+}
+
+/* HomeLab : chiffres clés et capture */
+.homelab-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+    margin: 0 0 1.5rem;
+}
+
+.homelab-stats div {
+    border: 1px solid var(--border-color);
+    background: rgba(0, 243, 255, 0.03);
+    padding: 0.8rem 1rem;
+}
+
+.homelab-stats b {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--accent-primary);
+    font-size: 1.05rem;
+}
+
+.homelab-stats span {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.homelab-figure {
+    margin: 0 0 1.5rem;
+}
+
+.homelab-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border-color);
+}
+
+.homelab-figure figcaption {
+    color: #999;
+    font-size: 0.82rem;
+    margin-top: 0.4rem;
+}
+
+.tl-doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-primary);
+    border: 1px solid rgba(0, 243, 255, 0.35);
+    padding: 0.35rem 0.8rem;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.tl-doc-link:hover,
+.tl-doc-link:focus-visible {
+    background: rgba(0, 243, 255, 0.1);
+}
+
+a.skill-cert-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.skill-cert-link:hover,
+a.skill-cert-link:focus-visible {
+    text-decoration: underline;
+}

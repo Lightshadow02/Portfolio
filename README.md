@@ -41,12 +41,14 @@ Une introduction impactante avec des animations de texte "glitch" qui présenten
 
 ### 2. Timeline Interactive (Parcours)
 Une visualisation claire et chronologique de mon parcours professionnel et académique :
-*   **Expérience Actuelle** : Ingénieur Cybersécurité (Alternance).
-*   **Historique** : De mes débuts en Bac Pro jusqu'à mon Master actuel.
+*   **Diplôme** : Ingénieur Cybersécurité Bac+5 (Liora, ex-DataScientest × CyberUniversity), obtenu en 2026.
+*   **Certifications** : ISO/IEC 27001 Lead Implementer (Bureau Veritas, 2026–2029), ISO/IEC 27001 Auditor (Liora), Cisco CCNA.
+*   **Historique** : De mes débuts en Bac Pro jusqu'à l'alternance chez MS Solutions (2022–2026).
+*   **Statut** : en recherche d'emploi.
 
 ### 3. Showcase de Compétences
 Une présentation structurée de mes expertises techniques :
-*   **🛡️ Cybersécurité** : Pentesting, SIEM, Firewalls (pfSense, Fortinet).
+*   **🛡️ Cybersécurité** : Pentesting, forensique, SIEM Splunk, IDS Snort, pfSense, ISO 27001/27005/27035.
 *   **🌐 Réseaux** : Architecture Cisco/Juniper, VPNs, Routage dynamique.
 *   **💻 Système & Scripting** : Administration Linux/Windows, PowerShell, Bash.
 
@@ -97,7 +99,7 @@ Si vous souhaitez explorer le code source ou tester le projet localement :
 ## 📞 Contact
 
 *   **🌐 Linktree** : [linktr.ee/LOUREIROH](https://linktr.ee/LOUREIROH)
-*   **👔 LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/hugo-loureiro035/)
+*   **👔 LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/h-loureiro/)
 *   **🐙 GitHub** : [@Lightshadow02](https://github.com/Lightshadow02)
 
 ---
