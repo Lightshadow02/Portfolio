@@ -1907,12 +1907,19 @@ html { overflow-x: clip; }
     background: rgba(0, 243, 255, 0.1);
 }
 
+/* Badges de certification cliquables : même rendu que les autres badges */
 a.skill-cert-link {
+    display: block;
     text-decoration: none;
-    cursor: pointer;
+    color: inherit;
 }
 
-a.skill-cert-link:hover,
+a.skill-cert-link .skill-cert i {
+    margin-left: 0.4rem;
+    opacity: 0.75;
+}
+
 a.skill-cert-link:focus-visible {
-    text-decoration: underline;
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
 }
