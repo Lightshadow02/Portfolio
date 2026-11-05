@@ -175,6 +175,7 @@
                         <span>PCA / PRA</span>
                         <span>Cloud Security</span>
                     </div>
+                    <a href="assets/docs/Diplome-Ingenieur-Cybersecurite-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="tl-doc-link"><i class="fas fa-file-pdf"></i> Voir le diplôme (PDF)</a>
                 </div>
             </div>
 
@@ -567,6 +568,7 @@
                     <li><i class="fas fa-shield-alt"></i> <strong>Périmètre</strong> : pfSense virtualisé en refus par défaut, IPS <strong>Snort</strong> en blocage sur le WAN (Community + ET Open), <strong>pfBlockerNG</strong> (DNSBL et listes d'IP).</li>
                     <li><i class="fas fa-project-diagram"></i> <strong>Segmentation</strong> : LAN de services, zone <strong>isolée</strong> pour le cloud exposé (Nextcloud), VLAN de stockage sur une interface physique dédiée (NFS vers les NAS).</li>
                     <li><i class="fas fa-lock"></i> <strong>Accès</strong> : VPN <strong>WireGuard</strong> pour l'administration à distance, <strong>reverse proxy TLS</strong> (Nginx Proxy Manager + Let's Encrypt) ; aucune console d'admin exposée sur Internet. Conteneurs LXC tous non privilégiés.</li>
+                    <li><i class="fas fa-globe"></i> <strong>DNS & TLS</strong> : DNS local <strong>split-horizon</strong> (Unbound, résolution récursive, validation <strong>DNSSEC</strong>) : les consoles internes n'existent pas dans le DNS public. Certificats <strong>Let's Encrypt</strong> ECDSA P-384, wildcard par challenge DNS, HTTPS forcé sur les 21 hôtes.</li>
                     <li><i class="fas fa-chart-line"></i> <strong>Supervision</strong> : <strong>Prometheus, Grafana et Loki</strong>, journaux du pare-feu centralisés, alertes rédigées en français envoyées sur téléphone.</li>
                     <li><i class="fas fa-database"></i> <strong>Sauvegardes</strong> : <strong>Proxmox Backup Server</strong> dédupliqué, 2 copies, vérification hebdomadaire, restauration testée.</li>
                     <li><i class="fas fa-cogs"></i> <strong>Services</strong> : Nextcloud (Talk, TURN, ClamAV), Jellyfin, IPBX Asterisk, bureau KDE par navigateur, scripts d'automatisation Python et Bash.</li>
@@ -580,6 +582,7 @@
                     <span><i class="fas fa-shield-alt"></i> pfSense</span>
                     <span><i class="fas fa-eye"></i> Snort IPS</span>
                     <span><i class="fas fa-ban"></i> pfBlockerNG</span>
+                    <span><i class="fas fa-globe"></i> Unbound · DNSSEC</span>
                     <span><i class="fas fa-lock"></i> WireGuard</span>
                     <span><i class="fab fa-docker"></i> Docker / LXC</span>
                     <span><i class="fas fa-chart-area"></i> Grafana · Prometheus · Loki</span>
