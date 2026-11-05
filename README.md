@@ -98,7 +98,7 @@ Si vous souhaitez explorer le code source ou tester le projet localement :
 ## 📞 Contact
 
 *   **🌐 Linktree** : [linktr.ee/LOUREIROH](https://linktr.ee/LOUREIROH)
-*   **👔 LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/hugo-loureiro035/)
+*   **👔 LinkedIn** : [Hugo Loureiro](https://www.linkedin.com/in/h-loureiro/)
 *   **🐙 GitHub** : [@Lightshadow02](https://github.com/Lightshadow02)
 
 ---
