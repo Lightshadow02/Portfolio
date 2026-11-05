@@ -1833,3 +1833,14 @@ footer p {
 
 /* Empêche le menu mobile hors-écran de créer un scroll horizontal */
 html { overflow-x: clip; }
+
+.featured-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.tl-card p a {
+    color: var(--accent-primary);
+}
