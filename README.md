@@ -41,7 +41,8 @@ Une introduction impactante avec des animations de texte "glitch" qui présenten
 
 ### 2. Timeline Interactive (Parcours)
 Une visualisation claire et chronologique de mon parcours professionnel et académique :
-*   **Diplôme** : Ingénieur Cybersécurité Bac+5 (DataScientest × CyberUniversity), obtenu en 2026.
+*   **Diplôme** : Ingénieur Cybersécurité Bac+5 (Liora, ex-DataScientest × CyberUniversity), obtenu en 2026.
+*   **Certifications** : Cisco CCNA, ISO/IEC 27001 Auditor.
 *   **Historique** : De mes débuts en Bac Pro jusqu'à l'alternance chez MS Solutions (2022–2026).
 *   **Statut** : en recherche d'emploi.
 
