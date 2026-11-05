@@ -41,12 +41,13 @@ Une introduction impactante avec des animations de texte "glitch" qui présenten
 
 ### 2. Timeline Interactive (Parcours)
 Une visualisation claire et chronologique de mon parcours professionnel et académique :
-*   **Expérience Actuelle** : Ingénieur Cybersécurité (Alternance).
-*   **Historique** : De mes débuts en Bac Pro jusqu'à mon Master actuel.
+*   **Diplôme** : Ingénieur Cybersécurité Bac+5 (DataScientest × CyberUniversity), obtenu en 2026.
+*   **Historique** : De mes débuts en Bac Pro jusqu'à l'alternance chez MS Solutions (2022–2026).
+*   **Statut** : en recherche d'emploi.
 
 ### 3. Showcase de Compétences
 Une présentation structurée de mes expertises techniques :
-*   **🛡️ Cybersécurité** : Pentesting, SIEM, Firewalls (pfSense, Fortinet).
+*   **🛡️ Cybersécurité** : Pentesting, forensique, SIEM Splunk, IDS Snort, pfSense, ISO 27001/27005/27035.
 *   **🌐 Réseaux** : Architecture Cisco/Juniper, VPNs, Routage dynamique.
 *   **💻 Système & Scripting** : Administration Linux/Windows, PowerShell, Bash.
 
