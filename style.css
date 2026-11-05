@@ -1906,3 +1906,13 @@ html { overflow-x: clip; }
 .tl-doc-link:focus-visible {
     background: rgba(0, 243, 255, 0.1);
 }
+
+a.skill-cert-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.skill-cert-link:hover,
+a.skill-cert-link:focus-visible {
+    text-decoration: underline;
+}
