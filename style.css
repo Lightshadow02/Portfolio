@@ -1844,3 +1844,46 @@ html { overflow-x: clip; }
 .tl-card p a {
     color: var(--accent-primary);
 }
+
+/* HomeLab : chiffres clés et capture */
+.homelab-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+    margin: 0 0 1.5rem;
+}
+
+.homelab-stats div {
+    border: 1px solid var(--border-color);
+    background: rgba(0, 243, 255, 0.03);
+    padding: 0.8rem 1rem;
+}
+
+.homelab-stats b {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--accent-primary);
+    font-size: 1.05rem;
+}
+
+.homelab-stats span {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.homelab-figure {
+    margin: 0 0 1.5rem;
+}
+
+.homelab-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border-color);
+}
+
+.homelab-figure figcaption {
+    color: #999;
+    font-size: 0.82rem;
+    margin-top: 0.4rem;
+}
