@@ -72,6 +72,10 @@ jobs:
           cd "$RUNNER_TEMP/site"
           rm -rf .github .gitignore .gitattributes FAVICON-GUIDE.md
           find . -name README.md -delete
+          # Numéro de version des CSS/JS = commit déployé, pour que le cache
+          # (navigateurs, Cloudflare) récupère toujours les nouveaux fichiers
+          sed -i -E "s/\?v=[0-9A-Za-z]+/?v=${GITHUB_SHA::8}/g" *.html
+          grep -ho '?v=[0-9a-f]*' *.html | sort -u
           echo "Fichiers à publier :"; find . -type f | sort
 
       - name: Envoi sur le serveur

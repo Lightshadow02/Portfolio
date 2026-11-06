@@ -1,106 +1,113 @@
+// Infobulles des technologies (.tech-item[data-description])
+// - Souris : l'infobulle suit le pointeur.
+// - Toucher : un appui l'ouvre sous le logo (un second appui la ferme), sans
+//   jamais bloquer le défilement de la page.
+// - Clavier : elle s'ouvre au focus, Échap la ferme.
+// L'infobulle reste toujours dans l'écran (marge de 12 px).
 document.addEventListener('DOMContentLoaded', () => {
-    // Create tooltip element
+    const MARGIN = 12;
     const tooltip = document.createElement('div');
     tooltip.className = 'cyber-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.id = 'tech-tooltip';
     tooltip.style.display = 'none';
     document.body.appendChild(tooltip);
 
-    const techItems = document.querySelectorAll('.tech-item');
-    let currentActiveItem = null;
+    const items = document.querySelectorAll('.tech-item[data-description]');
+    let active = null;
+    let lastPointer = 'mouse';
+    document.addEventListener('pointerdown', e => { lastPointer = e.pointerType || 'mouse'; }, true);
 
-    // Detect if device supports touch
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-    // Throttle function to limit frequency of position updates
-    function throttle(func, delay) {
-        let lastCall = 0;
-        return function (...args) {
-            const now = Date.now();
-            if (now - lastCall >= delay) {
-                lastCall = now;
-                func.apply(this, args);
-            }
-        };
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(value, max));
     }
 
-    function updateTooltipPos(e) {
-        // Get coordinates from touch or mouse event
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-
-        // Basic positioning
-        let x = clientX + 20;
-        let y = clientY + 20;
-
-        // Viewport boundary check (Prevent overflow)
-        const tooltipRect = tooltip.getBoundingClientRect();
-        const winWidth = window.innerWidth;
-        const winHeight = window.innerHeight;
-
-        if (x + tooltipRect.width > winWidth) {
-            x = clientX - tooltipRect.width - 20;
+    function place(x, y, below) {
+        const w = tooltip.offsetWidth;
+        const h = tooltip.offsetHeight;
+        const vw = document.documentElement.clientWidth;
+        const vh = window.innerHeight;
+        let left = clamp(x - w / 2, MARGIN, vw - w - MARGIN);
+        let top = below.top + 10;
+        if (top + h > vh - MARGIN) {
+            top = below.bottom - h - 10;
         }
-
-        if (y + tooltipRect.height > winHeight) {
-            y = clientY - tooltipRect.height - 20;
-        }
-
-        tooltip.style.left = `${x}px`;
-        tooltip.style.top = `${y}px`;
+        tooltip.style.left = `${Math.round(left)}px`;
+        tooltip.style.top = `${Math.round(clamp(top, MARGIN, vh - h - MARGIN))}px`;
     }
 
-    function showTooltip(item, e) {
-        const desc = item.getAttribute('data-description');
-        if (desc) {
-            tooltip.textContent = desc;
-            tooltip.style.display = 'block';
-            updateTooltipPos(e);
-            currentActiveItem = item;
-        }
+    // Sous l'élément, centrée sur lui (toucher, clavier)
+    function placeUnder(item) {
+        const r = item.getBoundingClientRect();
+        place(r.left + r.width / 2, 0, { top: r.bottom, bottom: r.top });
     }
 
-    function hideTooltip() {
+    // Près du pointeur (souris)
+    function placeAtPointer(e) {
+        place(e.clientX, 0, { top: e.clientY + 8, bottom: e.clientY - 8 });
+    }
+
+    function show(item) {
+        tooltip.textContent = item.getAttribute('data-description');
+        tooltip.style.display = 'block';
+        item.setAttribute('aria-describedby', 'tech-tooltip');
+        active = item;
+    }
+
+    function hide() {
+        if (active) active.removeAttribute('aria-describedby');
         tooltip.style.display = 'none';
-        currentActiveItem = null;
+        active = null;
     }
 
-    // Throttle tooltip position updates to every 16ms (~60fps)
-    const throttledUpdatePos = throttle(updateTooltipPos, 16);
+    items.forEach(item => {
+        item.setAttribute('tabindex', '0');
 
-    techItems.forEach(item => {
-        if (isTouchDevice) {
-            // Touch events for mobile
-            item.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // Prevent long-press menu
+        item.addEventListener('pointerenter', e => {
+            if (e.pointerType !== 'mouse') return;
+            show(item);
+            placeAtPointer(e);
+        });
 
-                // Toggle tooltip on tap
-                if (currentActiveItem === item) {
-                    hideTooltip();
-                } else {
-                    hideTooltip(); // Hide any existing tooltip
-                    showTooltip(item, e);
-                }
-            });
-        } else {
-            // Mouse events for desktop
-            item.addEventListener('mouseenter', (e) => {
-                showTooltip(item, e);
-            });
+        item.addEventListener('pointermove', e => {
+            if (e.pointerType === 'mouse' && active === item) placeAtPointer(e);
+        });
 
-            item.addEventListener('mousemove', throttledUpdatePos);
+        item.addEventListener('pointerleave', e => {
+            if (e.pointerType === 'mouse') hide();
+        });
 
-            item.addEventListener('mouseleave', () => {
-                hideTooltip();
-            });
-        }
-    });
-
-    // Close tooltip when tapping outside on mobile
-    if (isTouchDevice) {
-        document.addEventListener('touchstart', (e) => {
-            if (!e.target.closest('.tech-item') && !e.target.closest('.cyber-tooltip')) {
-                hideTooltip();
+        // Un « click » n'est émis que pour un vrai appui, jamais pour un geste
+        // de défilement : le scroll reste libre sur toute la grille.
+        item.addEventListener('click', () => {
+            if (lastPointer === 'mouse') return;
+            if (active === item) {
+                hide();
+            } else {
+                show(item);
+                placeUnder(item);
             }
         });
-    }
+
+        item.addEventListener('focus', () => {
+            if (item.matches(':focus-visible')) {
+                show(item);
+                placeUnder(item);
+            }
+        });
+
+        item.addEventListener('blur', () => {
+            if (active === item) hide();
+        });
+    });
+
+    // Fermer : appui ailleurs, défilement, redimensionnement, Échap
+    document.addEventListener('pointerdown', e => {
+        if (active && !e.target.closest('.tech-item')) hide();
+    });
+    window.addEventListener('scroll', () => { if (active) hide(); }, { passive: true });
+    window.addEventListener('resize', () => { if (active) hide(); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') hide();
+    });
 });
