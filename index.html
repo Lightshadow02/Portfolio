@@ -436,6 +436,126 @@
                             alt="Electron">
                         <span>Electron</span>
                     </div>
+                    <div class="tech-item" title="WireGuard"
+                        data-description="VPN moderne, rapide et chiffré (Curve25519, ChaCha20). Utilisé pour l'accès d'administration à distance au HomeLab : 5 pairs, un seul port UDP exposé.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wireguard/wireguard-original.svg" alt="WireGuard" loading="lazy">
+                        <span>WireGuard</span>
+                    </div>
+                    <div class="tech-item" title="Nginx Proxy Manager"
+                        data-description="Reverse proxy basé sur Nginx avec interface web. Point d'entrée HTTPS unique, certificats Let's Encrypt (wildcard DNS-01) et listes d'accès LAN/VPN.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx Proxy Manager" loading="lazy">
+                        <span>Nginx PM</span>
+                    </div>
+                    <div class="tech-item" title="Proxmox Backup Server"
+                        data-description="Serveur de sauvegarde de Proxmox : sauvegardes incrémentales, déduplication par blocs, vérification d'intégrité et rétention fine. Deux copies chaque nuit dans le HomeLab.">
+                        <i class="fas fa-database" style="font-size: 3rem; color: #e57000;" aria-hidden="true"></i>
+                        <span>PBS</span>
+                    </div>
+                    <div class="tech-item" title="Snort"
+                        data-description="IDS/IPS open source qui inspecte le trafic réseau avec des signatures. Utilisé en mode blocage sur le WAN de pfSense, avec gestion des faux positifs.">
+                        <i class="fas fa-eye" style="font-size: 3rem; color: #ff3366;" aria-hidden="true"></i>
+                        <span>Snort</span>
+                    </div>
+                    <div class="tech-item" title="pfBlockerNG"
+                        data-description="Extension pfSense de filtrage par réputation : listes d'IP malveillantes et DNSBL (environ 352 000 domaines de publicité, malware et phishing bloqués).">
+                        <i class="fas fa-ban" style="font-size: 3rem; color: #ff5555;" aria-hidden="true"></i>
+                        <span>pfBlockerNG</span>
+                    </div>
+                    <div class="tech-item" title="Splunk"
+                        data-description="SIEM et plateforme d'analyse de journaux. Mis en œuvre dans le mémoire Iron4Software : collecte pfSense en syslog, recherches et alerting maison.">
+                        <i class="fas fa-chart-bar" style="font-size: 3rem; color: #65a637;" aria-hidden="true"></i>
+                        <span>Splunk</span>
+                    </div>
+                    <div class="tech-item" title="Grafana"
+                        data-description="Outil de visualisation et d'alerting. Tableaux de bord du lab (Proxmox, pfSense, sécurité) et alertes en français envoyées sur téléphone.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana" loading="lazy">
+                        <span>Grafana</span>
+                    </div>
+                    <div class="tech-item" title="Prometheus"
+                        data-description="Base de métriques temporelles avec exporters (node, Proxmox, SNMP, blackbox). Collecte l'état de l'hôte, des invités et des NAS, conservé 30 jours.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="Prometheus" loading="lazy">
+                        <span>Prometheus</span>
+                    </div>
+                    <div class="tech-item" title="Loki"
+                        data-description="Centralisation des journaux (par Grafana Labs). Reçoit les logs du pare-feu, de Snort et de pfBlockerNG via Alloy, pour l'investigation et les alertes.">
+                        <i class="fas fa-scroll" style="font-size: 3rem; color: #f2cc0c;" aria-hidden="true"></i>
+                        <span>Loki</span>
+                    </div>
+                    <div class="tech-item" title="Zabbix"
+                        data-description="Solution de supervision réseau et système, avec agents et SNMP. Mise en place en entreprise chez MS Solutions, couplée à un IDS.">
+                        <i class="fas fa-heartbeat" style="font-size: 3rem; color: #d40000;" aria-hidden="true"></i>
+                        <span>Zabbix</span>
+                    </div>
+                    <div class="tech-item" title="Nextcloud"
+                        data-description="Cloud privé auto-hébergé : fichiers, agenda, visio Talk. Administré dans une zone réseau isolée, avec Redis, MariaDB, ClamAV et un backend Talk haute performance.">
+                        <i class="fas fa-cloud" style="font-size: 3rem; color: #0082c9;" aria-hidden="true"></i>
+                        <span>Nextcloud</span>
+                    </div>
+                    <div class="tech-item" title="Jellyfin"
+                        data-description="Serveur multimédia open source. Comptes individuels avec limite de lectures simultanées, bibliothèque montée en lecture seule et scripts d'automatisation maison (badges VO/VF, collections).">
+                        <i class="fas fa-film" style="font-size: 3rem; color: #aa5cc3;" aria-hidden="true"></i>
+                        <span>Jellyfin</span>
+                    </div>
+                    <div class="tech-item" title="Asterisk"
+                        data-description="IPBX open source pour la téléphonie sur IP (SIP/RTP). Configuré entièrement à la main, sans interface graphique.">
+                        <i class="fas fa-phone-alt" style="font-size: 3rem; color: #f68f1e;" aria-hidden="true"></i>
+                        <span>Asterisk</span>
+                    </div>
+                    <div class="tech-item" title="Debian"
+                        data-description="Distribution Linux stable, base de la plupart des conteneurs LXC du lab et de nombreux serveurs en production.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/debian/debian-original.svg" alt="Debian" loading="lazy">
+                        <span>Debian</span>
+                    </div>
+                    <div class="tech-item" title="Kali Linux"
+                        data-description="Distribution orientée tests d'intrusion (Nmap, Metasploit, Burp…). Utilisée pour le pentest du mémoire Iron4Software et les challenges Root-Me.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kalilinux/kalilinux-original.svg" alt="Kali Linux" loading="lazy">
+                        <span>Kali</span>
+                    </div>
+                    <div class="tech-item" title="Windows Server"
+                        data-description="Système serveur de Microsoft : Active Directory, DNS, DHCP, GPO. Administration et automatisation PowerShell en entreprise.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg" alt="Windows Server" loading="lazy">
+                        <span>Win Server</span>
+                    </div>
+                    <div class="tech-item" title="Microsoft Azure"
+                        data-description="Cloud de Microsoft. Certification AZ-104 (Azure Administrator) : identités, réseaux virtuels, stockage, machines virtuelles et supervision.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Microsoft Azure" loading="lazy">
+                        <span>Azure</span>
+                    </div>
+                    <div class="tech-item" title="Stormshield"
+                        data-description="Pare-feu UTM français, qualifié par l'ANSSI. Certification CSNA (Stormshield Network Administrator).">
+                        <i class="fas fa-shield-virus" style="font-size: 3rem; color: #00a0df;" aria-hidden="true"></i>
+                        <span>Stormshield</span>
+                    </div>
+                    <div class="tech-item" title="Metasploit"
+                        data-description="Framework d'exploitation pour les tests d'intrusion. Utilisé dans un laboratoire isolé pour le mémoire Iron4Software.">
+                        <i class="fas fa-crosshairs" style="font-size: 3rem; color: #2596cd;" aria-hidden="true"></i>
+                        <span>Metasploit</span>
+                    </div>
+                    <div class="tech-item" title="Python"
+                        data-description="Langage de script utilisé pour l'automatisation : rapports de sauvegarde, intégrations d'API (Jellyfin, PBS), outils d'administration.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" loading="lazy">
+                        <span>Python</span>
+                    </div>
+                    <div class="tech-item" title="Bash"
+                        data-description="Shell Linux pour scripter l'administration : inventaire, maintenance, montages NFS, tâches planifiées.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" loading="lazy">
+                        <span>Bash</span>
+                    </div>
+                    <div class="tech-item" title="PowerShell"
+                        data-description="Shell et langage d'automatisation de Microsoft : gestion d'Active Directory, comptes, GPO et durcissement Windows.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powershell/powershell-original.svg" alt="PowerShell" loading="lazy">
+                        <span>PowerShell</span>
+                    </div>
+                    <div class="tech-item" title="MariaDB"
+                        data-description="Base de données SQL (fork de MySQL). Sert Nextcloud sur un réseau Docker interne, jamais exposé.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mariadb/mariadb-original.svg" alt="MariaDB" loading="lazy">
+                        <span>MariaDB</span>
+                    </div>
+                    <div class="tech-item" title="Redis"
+                        data-description="Base clé-valeur en mémoire. Cache distribué et verrouillage des fichiers pour Nextcloud.">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis" loading="lazy">
+                        <span>Redis</span>
+                    </div>
                 </div>
             </div>
 
