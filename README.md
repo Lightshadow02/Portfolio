@@ -1,7 +1,7 @@
 # Portfolio - Hugo LOUREIRO 🛡️💻
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Status-V2%20Cyber%20Core-success?style=for-the-badge&logo=dependabot&logoColor=white&color=00f3ff">
+  <img src="https://img.shields.io/badge/Status-V3%20Refonte%202026-success?style=for-the-badge&logo=dependabot&logoColor=white&color=00f3ff">
   <img src="https://img.shields.io/badge/Role-Cyber%20Security%20Engineer-blue?style=for-the-badge&logo=security&logoColor=white&color=0051ff">
   <img src="https://img.shields.io/badge/Stack-HTML5%20%2F%20CSS3%20%2F%20JS-orange?style=for-the-badge&logo=html5&logoColor=white&color=39ff14">
 </div>
@@ -11,33 +11,27 @@
 ## 🌐 Présentation
 
 Bienvenue sur la **V2 de mon Portfolio Personnel**.
-Ce projet est une vitrine technique conçue pour refléter mon identité d'**Ingénieur Cybersécurité & Réseaux**. L'interface a été entièrement développée avec une esthétique **"Cyber Core / Hacker"**, plongeant l'utilisateur dans un univers immersif inspiré des terminaux Linux et du Cyberpunk.
+Ce projet est une vitrine technique conçue pour refléter mon identité d'**Ingénieur Cybersécurité & Réseaux**. L'interface est volontairement sobre : un design sombre et lisible, pensé pour les recruteurs.
 
 👉 **Version en ligne :** [hloureiro.fr](https://hloureiro.fr)
 
 ---
 
-## 🎨 Design System & Esthétique
+## 🎨 Design
 
-L'expérience utilisateur est au cœur de ce portfolio, avec un soin particulier apporté aux détails visuels et aux animations :
+Refonte de novembre 2026 : une direction **tech sobre et sombre**.
 
-*   **Identité Visuelle "Cyber Core"** :
-    *   🔵 **Cyan (`#00f3ff`)** : Symbolisant la technologie et les réseaux.
-    *   🟢 **Toxic Green (`#39ff14`)** : Évoquant le "success" des terminaux et l'univers hacker.
-*   **Effets Immersifs** :
-    *   🖥️ **Matrix Rain** : Arrière-plan dynamique en Canvas JS.
-    *   📺 **CRT Scanlines** : Filtre visuel rappelant les écrans cathodiques rétro.
-    *   ⚡ **Glitch & Scramble** : Animations de texte pour un effet de décryptage en temps réel.
-*   **Composants UI** :
-    *   Design inspiré des **HUD (Head-Up Display)** de science-fiction.
-    *   Cartes stylisées avec effets de survol et bordures techniques.
+*   **Un seul accent** (teal `#3dd6b0`) sur un fond `#0b0d10`, sans néon ni effet décoratif.
+*   **Typographie** : Geist pour le texte, Geist Mono réservée aux données (dates, versions, adresses, chiffres).
+*   **Mouvement** : une seule animation d'arrivée sur l'accueil, des micro-interactions au survol, et tout est désactivé si l'utilisateur préfère réduire les animations.
+*   **Accessibilité** : contraste vérifié, focus clavier visible, lien d'évitement, sélection et barres de défilement aux couleurs du site.
 
 ---
 
 ## 🚀 Fonctionnalités Clés
 
 ### 1. Hero Section Dynamique
-Une introduction impactante avec des animations de texte "glitch" qui présentent mon profil et mes ambitions.
+Une introduction directe : qui je suis, ce que je cherche, mon CV, et une fiche résumée (diplôme, certifications, expérience, projets).
 
 ### 2. Timeline Interactive (Parcours)
 Une visualisation claire et chronologique de mon parcours professionnel et académique :
@@ -56,7 +50,7 @@ Une présentation structurée de mes expertises techniques :
 Les projets présentés sont récupérés **automatiquement** via l'API publique de GitHub :
 *   Affichage des dépôts les plus récents.
 *   Filtrage intelligent pour mettre en avant les projets pertinents.
-*   Cartes interactives avec effet 3D Flip.
+*   Cartes avec un extrait du README de chaque projet.
 
 ### 5. HomeLab & Projets Personnels
 Une section dédiée à ma passion pour l'auto-hébergement et l'infrastructure :
@@ -72,7 +66,7 @@ Ce portfolio est construit sans framework lourd pour garantir performance et ma�
 | Categorie | Technologies |
 | :--- | :--- |
 | **Front-End** | HTML5, CSS3 (Variables, Flexbox/Grid), Vanilla JavaScript (ES6+) |
-| **Animation** | HTML5 Canvas (Matrix Effect), CSS Keyframes |
+| **Animation** | CSS (transitions, une animation d'arrivée) |
 | **Données** | GitHub REST API |
 | **Hébergement** | *Self-Hosted* / VPS Linux |
 
