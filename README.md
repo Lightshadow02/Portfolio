@@ -42,7 +42,7 @@ Une introduction impactante avec des animations de texte "glitch" qui présenten
 ### 2. Timeline Interactive (Parcours)
 Une visualisation claire et chronologique de mon parcours professionnel et académique :
 *   **Diplôme** : Ingénieur Cybersécurité Bac+5 (Liora, ex-DataScientest × CyberUniversity), obtenu en 2026.
-*   **Certifications** : ISO/IEC 27001 Lead Implementer (Bureau Veritas, 2026–2029), ISO/IEC 27001 Auditor (Liora), Cisco CCNA.
+*   **Certifications** : ISO/IEC 27001 Lead Implementer (Bureau Veritas, 2026–2029), ISO/IEC 27001 Auditor (Liora), Microsoft AZ-104, Stormshield CSNA, Cisco CCNA niveau 4 (Networking Academy).
 *   **Historique** : De mes débuts en Bac Pro jusqu'à l'alternance chez MS Solutions (2022–2026).
 *   **Statut** : en recherche d'emploi.
 
