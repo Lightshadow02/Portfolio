@@ -184,32 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fetch README for this repo and update title
             fetchReadme(repo.name, projectBack, title);
 
-            // Detect mobile
-            const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-            let isFlipped = false;
-
-            // Make the whole card clickable to open repo
+            // Le clic (souris ou toucher) ouvre le dépôt
             const openRepo = () => {
                 window.open(repo.html_url, '_blank', 'noopener,noreferrer');
             };
-
-            if (isMobile) {
-                // On mobile: first tap flips, second tap opens link
-                card.addEventListener('click', (e) => {
-                    if (!isFlipped) {
-                        // First tap: flip the card
-                        e.preventDefault();
-                        projectInner.style.transform = 'rotateY(180deg)';
-                        isFlipped = true;
-                    } else {
-                        // Second tap: open repo
-                        openRepo();
-                    }
-                });
-            } else {
-                // On desktop: click opens directly (hover already shows back)
-                card.addEventListener('click', openRepo);
-            }
+            card.addEventListener('click', openRepo);
 
             // Keyboard accessibility
             card.addEventListener('keydown', (e) => {

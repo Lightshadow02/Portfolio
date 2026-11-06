@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#00f3ff">
+    <meta name="theme-color" content="#0b0d10">
     <title>HomeLab Proxmox | Hugo Loureiro</title>
     <meta name="description"
         content="HomeLab de Hugo Loureiro : infrastructure de type PME sous Proxmox VE. pfSense, Snort IPS, pfBlockerNG, segmentation, WireGuard, DNS split-horizon DNSSEC, Prometheus/Grafana/Loki, Proxmox Backup Server.">
@@ -27,14 +27,14 @@
     <link rel="stylesheet" href="style_homelab_page.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 </head>
 
 <body class="hl-page">
 
     <nav class="navbar" aria-label="Navigation">
-        <a href="index.html" class="logo" aria-label="Retour à l'accueil">&lt;HL /&gt;</a>
+        <a href="index.html" class="logo">Hugo Loureiro</a>
         <ul class="hl-nav">
             <li><a href="#architecture">Architecture</a></li>
             <li><a href="#dns">DNS</a></li>
@@ -46,15 +46,13 @@
         </ul>
     </nav>
 
-    <canvas id="matrix-bg"></canvas>
 
     <main>
         <!-- En-tête -->
         <header class="section hl-hero">
-            <p class="hl-kicker"><i class="fas fa-server"></i> Projet personnel · en production depuis 2021</p>
             <h1>HomeLab — Infrastructure virtualisée et sécurisée sous <span class="highlight">Proxmox VE</span></h1>
             <p class="hl-lead">
-                Un serveur unique qui fait tourner <strong>une infrastructure complète de type PME</strong> :
+                Un projet personnel, en production depuis 2021 : un serveur unique qui fait tourner <strong>une infrastructure complète de type PME</strong> :
                 pare-feu et IPS virtualisés, zones réseau séparées, VPN, reverse proxy TLS, services collaboratifs,
                 téléphonie IP, supervision centralisée avec alertes, et sauvegardes dédupliquées et vérifiées.
                 Il héberge des services utilisés au quotidien par 30 à 40 personnes, famille, amis et associations.
@@ -259,7 +257,7 @@
                     <ol>
                         <li><b>Poste LAN / client VPN</b><span>demande <code>grafana.exemple.fr</code></span></li>
                         <li><b>Unbound (pfSense)</b><span>substitution locale → <code>192.168.1.101</code></span></li>
-                        <li><b>Reverse proxy</b><span>certificat wildcard valide · liste d'accès LAN + VPN ✓</span></li>
+                        <li><b>Reverse proxy</b><span>certificat wildcard valide · liste d'accès LAN + VPN : autorisé</span></li>
                         <li class="hl-end"><b>Grafana</b><span>accès accordé</span></li>
                     </ol>
                 </div>
@@ -722,7 +720,6 @@
         </div>
     </footer>
 
-    <script src="script2_effects.js"></script>
 </body>
 
 </html>

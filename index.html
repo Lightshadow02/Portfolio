@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#00f3ff">
+    <meta name="theme-color" content="#0b0d10">
     <title>Hugo Loureiro | Ingénieur Cybersécurité & Réseaux</title>
     <meta name="description"
         content="Portfolio de Hugo Loureiro - Ingénieur Cybersécurité & Réseaux (Bac+5), certifié ISO 27001 Lead Implementer. En recherche d'emploi : SOC, sécurité réseau, administration système. Proxmox, pfSense, Splunk, Snort, pentest.">
@@ -43,15 +43,9 @@
     <link rel="canonical" href="https://hloureiro.fr">
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style_homelab.css">
-    <link rel="stylesheet" href="style_github_btn.css">
-    <link rel="stylesheet" href="style_tooltips.css">
-    <!-- Google Fonts for Cyber/Tech look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;700&family=Press+Start+2P&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 
     <!-- Structured Data (JSON-LD) for SEO -->
@@ -114,47 +108,54 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Navigation principale">
-        <div class="logo" aria-label="Logo Hugo Loureiro">&lt;HL /&gt;</div>
-        <ul class="nav-links">
-            <li><a href="#hero">Accueil</a></li>
-            <li><a href="#parcours">Parcours</a></li>
-            <li><a href="#competences">Compétences</a></li>
-            <li><a href="#projets">Projets</a></li>
-            <li><a href="#interets">Intérêts</a></li>
-            <li><a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="nav-cv"><i class="fas fa-file-pdf"></i> CV</a></li>
-        </ul>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <header class="navbar" aria-label="Navigation principale">
+        <a href="#hero" class="logo">Hugo Loureiro</a>
+        <nav>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#parcours">Parcours</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="homelab.html">HomeLab</a></li>
+                <li><a href="#interets">Intérêts</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="nav-cv"><i class="fas fa-arrow-down" aria-hidden="true"></i> CV</a></li>
+            </ul>
+        </nav>
         <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
             <div class="line1"></div>
             <div class="line2"></div>
             <div class="line3"></div>
         </button>
-    </nav>
+    </header>
 
-    <!-- Background Matrix -->
-    <canvas id="matrix-bg"></canvas>
-
+    <main id="main">
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title"></h1>
-            <h2><span class="highlight">Ingénieur Cybersécurité & Réseaux</span> | Diplômé Bac+5</h2>
-            <p class="hero-available"><span class="available-dot"></span> Disponible — en recherche d'emploi (SOC, sécurité réseau, admin système)</p>
-            <p>Passionné par la cybersécurité, l'administration système et l'automatisation.</p>
-            <a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="cv-cta" download="CV-Hugo-Loureiro.pdf">
-                <i class="fas fa-file-download"></i>
-                <span><b>Télécharger mon CV</b><small>PDF · 2 pages · novembre 2026</small></span>
-            </a>
-            <div class="hero-buttons">
-                <a href="mailto:contact@hloureiro.fr" class="btn primary-btn">Me contacter</a>
-                <a href="#projets" class="btn secondary-btn">Voir mes projets</a>
+            <div class="hero-text">
+                <p class="hero-available"><span class="available-dot" aria-hidden="true"></span> Disponible pour un poste</p>
+                <h1 class="hero-title">Hugo Loureiro, <span class="hero-role">ingénieur cybersécurité et réseaux.</span></h1>
+                <p class="hero-lead">Diplômé Bac+5 et certifié <strong>ISO 27001 Lead Implementer</strong>. Quatre ans d'alternance en administration réseau et un HomeLab en production depuis 2021. Je cherche un poste en <strong>SOC</strong>, en <strong>sécurité réseau</strong> ou en <strong>administration système</strong>.</p>
+                <div class="hero-buttons">
+                    <a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="btn primary-btn" download="CV-Hugo-Loureiro.pdf"><i class="fas fa-arrow-down" aria-hidden="true"></i> Télécharger mon CV</a>
+                    <a href="mailto:contact@hloureiro.fr" class="btn secondary-btn">Me contacter</a>
+                </div>
             </div>
+            <dl class="hero-facts">
+                <div><dt>Diplôme</dt><dd>Ingénieur cybersécurité, Bac+5 <span>Liora × CyberUniversity, 2026</span></dd></div>
+                <div><dt>Certifications</dt><dd>ISO 27001 Lead Implementer <span>Bureau Veritas · AZ-104 · Stormshield CSNA · CCNA</span></dd></div>
+                <div><dt>Expérience</dt><dd>Administrateur réseaux en alternance <span>MS Solutions, 2022 — 2026</span></dd></div>
+                <div><dt>Projets</dt><dd><a href="#projets">Mémoire Iron4Software</a> · <a href="homelab.html">HomeLab Proxmox</a></dd></div>
+                <div><dt>Recherche</dt><dd>SOC · sécurité réseau · admin système <span>Franche-Comté, ou à distance</span></dd></div>
+            </dl>
         </div>
     </section>
 
     <!-- Parcours Section -->
     <section id="parcours" class="section">
-        <h2 class="section-title">Mon Parcours</h2>
+        <h2 class="section-title">Parcours</h2>
         <div class="timeline-v2">
 
             <!-- Diplômé -->
@@ -170,7 +171,7 @@
                 <div class="tl-card">
                     <div class="tl-card-header">
                         <h3>Ingénieur Cybersécurité (Bac+5)</h3>
-                        <span class="tl-status">🎓 Diplômé</span>
+                        <span class="tl-status"><i class="fas fa-check" aria-hidden="true"></i> Diplômé</span>
                     </div>
                     <h4><i class="fas fa-map-marker-alt"></i> Liora (ex-DataScientest) × CyberUniversity — Paris</h4>
                     <p>Pentesting, analyse de vulnérabilités, sécurisation Cloud, forensic numérique, analyse de risques, PCA/PRA, gestion d'incidents et gouvernance ISO/IEC 27001:2022.
@@ -314,7 +315,7 @@
 
     <!-- Compétences Section -->
     <section id="competences" class="section">
-        <h2 class="section-title">Mes Compétences</h2>
+        <h2 class="section-title">Compétences</h2>
         <div class="skills-wrapper">
 
             <div class="skill-category skill-reseaux">
@@ -324,7 +325,7 @@
                     <span>Routage Dynamique (BGP, OSPF, RIP)</span>
                     <span>Réseaux Virtuels (Linux Bridge, VLAN Integration)</span>
                     <span>Sauvegardes (Veeam, Vzdump, Stratégie 3-2-1-0)</span>
-                    <span class="skill-cert">🏅 Cisco CCNA niveau 4 — Networking Academy (2023)</span>
+                    <span class="skill-cert"><i class="fas fa-certificate" aria-hidden="true"></i> Cisco CCNA niveau 4 — Networking Academy (2023)</span>
                 </div>
             </div>
 
@@ -339,9 +340,9 @@
                     <span>Durcissement Linux / Windows (Fail2Ban, auditd, Defender, SMB)</span>
                     <span>Gestion des risques ISO 27005 & réponse à incident ISO 27035</span>
                     <span>Architecture Sécurisée</span>
-                    <span class="skill-cert">🏅 Stormshield CSNA — Network Administrator (2024)</span>
-                    <a href="assets/docs/Certification-ISO27001-Lead-Implementer-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="skill-cert-link" title="Voir le certificat (PDF)"><span class="skill-cert">🏅 ISO 27001 Lead Implementer — Bureau Veritas <i class="fas fa-file-pdf"></i></span></a>
-                    <a href="assets/docs/Diplome-Ingenieur-Cybersecurite-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="skill-cert-link" title="Voir le diplôme (PDF)"><span class="skill-cert">🎓 Diplôme Ingénieur Cybersécurité — Liora <i class="fas fa-file-pdf"></i></span></a>
+                    <span class="skill-cert"><i class="fas fa-certificate" aria-hidden="true"></i> Stormshield CSNA — Network Administrator (2024)</span>
+                    <a href="assets/docs/Certification-ISO27001-Lead-Implementer-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="skill-cert-link" title="Voir le certificat (PDF)"><span class="skill-cert"><i class="fas fa-certificate" aria-hidden="true"></i> ISO 27001 Lead Implementer — Bureau Veritas <i class="fas fa-arrow-up-right-from-square cert-ext" aria-hidden="true"></i></span></a>
+                    <a href="assets/docs/Diplome-Ingenieur-Cybersecurite-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="skill-cert-link" title="Voir le diplôme (PDF)"><span class="skill-cert"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Diplôme Ingénieur Cybersécurité — Liora <i class="fas fa-arrow-up-right-from-square cert-ext" aria-hidden="true"></i></span></a>
                 </div>
             </div>
 
@@ -363,15 +364,15 @@
                     <span>Windows Server (DNS, AD, DHCP)</span>
                     <span>Proxmox VE / Proxmox Backup Server / ESXi</span>
                     <span>Supervision (Prometheus, Grafana, Loki)</span>
-                    <span>🖥️ OS Personnel</span>
-                    <span class="skill-cert">🏅 Microsoft AZ-104 — Azure Administrator (2024)</span>
+                    <span>Développement d'un OS personnel (LightOS)</span>
+                    <span class="skill-cert"><i class="fas fa-certificate" aria-hidden="true"></i> Microsoft AZ-104 — Azure Administrator (2024)</span>
                 </div>
             </div>
 
             <!-- Certifications removed as requested -->
 
             <div class="skill-category tech-stack-category">
-                <h3><i class="fas fa-laptop-code"></i> Technologies Connues</h3>
+                <h3><i class="fas fa-laptop-code"></i> Technologies utilisées</h3><p class="tech-hint">Survolez ou touchez un logo pour sa définition.</p>
                 <div class="tech-grid">
                     <!-- Logos fetched from Devicon CDN where available -->
                     <div class="tech-item" title="Proxmox"
@@ -397,7 +398,7 @@
                         <span>Java</span>
                     </div>
                     <div class="tech-item" title="JavaScript"
-                        data-description="Langage de script incontournable du Web. Utilisé pour le dynamisme front-end, les animations (Matrix, Glitch) et le scripting côté navigateur.">
+                        data-description="Langage de script incontournable du Web. Utilisé pour l'interactivité du site : chargement des projets GitHub, menu mobile et infobulles.">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
                             alt="JS">
                         <span>JS</span>
@@ -564,7 +565,7 @@
 
     <!-- Projets Section -->
     <section id="projets" class="section">
-        <h2 class="section-title">Mes Projets</h2>
+        <h2 class="section-title">Projets</h2>
 
         <!-- Projet phare : mémoire d'ingénieur -->
         <article class="interest-card featured-project" id="iron4software">
@@ -776,18 +777,30 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
+    <!-- Contact -->
+    <section id="contact" class="section contact-section">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-card">
+            <p class="contact-lead">Un poste en SOC, en sécurité réseau ou en administration système ? Écrivez-moi, je réponds rapidement.</p>
+            <div class="hero-buttons">
+                <a href="mailto:contact@hloureiro.fr" class="btn primary-btn"><i class="fas fa-envelope" aria-hidden="true"></i> contact@hloureiro.fr</a>
+                <a href="https://www.linkedin.com/in/h-loureiro/" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
+                <a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fas fa-arrow-down" aria-hidden="true"></i> CV (PDF)</a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer>
         <div class="footer-content">
-            <h3>Hugo LOUREIRO</h3>
+            <p class="footer-name">Hugo Loureiro</p>
             <div class="socials">
-                <a href="https://www.linkedin.com/in/h-loureiro/" target="_blank"><i
-                        class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/Lightshadow02" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:contact@hloureiro.fr"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/h-loureiro/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Lightshadow02" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:contact@hloureiro.fr" aria-label="E-mail"><i class="fas fa-envelope"></i></a>
                 <a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" aria-label="CV (PDF)"><i class="fas fa-file-pdf"></i></a>
             </div>
-            <p>&copy; 2026 Hugo Loureiro. Tous droits réservés.</p>
+            <p class="footer-copy">&copy; 2026 Hugo Loureiro</p>
         </div>
     </footer>
 
@@ -796,7 +809,6 @@
     <!-- Local projects data -->
     <script src="projects-data.js"></script>
     <script src="script.js"></script>
-    <script src="script2_effects.js"></script>
     <script src="script_tooltips.js"></script>
 </body>
 
