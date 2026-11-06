@@ -880,3 +880,79 @@
     .hl-mon-col { flex: 0 0 auto; }
     .hl-mon-arrow { transform: rotate(90deg); }
 }
+
+/* Incident majeur mis en avant */
+.hl-incident {
+    border: 1px solid rgba(255, 51, 102, 0.45);
+    border-left: 4px solid #ff3366;
+    background: linear-gradient(135deg, rgba(255, 51, 102, 0.06), var(--bg-surface) 60%);
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.hl-incident-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ff6f8f;
+}
+
+.hl-incident h4 {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: #f2f5f8;
+    margin: 0.3rem 0 1rem;
+}
+
+.hl-incident h4 i {
+    color: #ff3366;
+    margin-right: 0.4rem;
+}
+
+.hl-incident-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+}
+
+.hl-incident h5 {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+}
+
+.hl-incident p {
+    color: #bbb;
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+.hl-incident p strong {
+    color: #eee;
+}
+
+/* Frise : texte aligné à droite de la date, même sur plusieurs lignes */
+.hl-timeline li {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+}
+
+.hl-timeline span {
+    flex: 0 0 9.5rem;
+}
+
+@media (max-width: 768px) {
+    .hl-timeline li {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .hl-timeline span {
+        flex: 0 0 auto;
+    }
+}
