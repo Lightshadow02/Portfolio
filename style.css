@@ -1257,3 +1257,14 @@ footer {
         scroll-behavior: auto !important;
     }
 }
+
+/* Mobile : infobulle à la largeur de l'écran, pas de flash gris au toucher */
+.tech-item {
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 640px) {
+    .cyber-tooltip {
+        max-width: calc(100vw - 24px);
+    }
+}

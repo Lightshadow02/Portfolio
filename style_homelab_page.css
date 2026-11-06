@@ -1063,3 +1063,15 @@
 
 .hl-step { flex: 1 1 0; min-width: 0; }
 .hl-link { flex: 0 0 78px; }
+
+/* Mobile : étapes DNS à la hauteur de leur contenu, frise lisible */
+.hl-timeline li p {
+    margin: 0;
+    color: inherit;
+}
+
+@media (max-width: 768px) {
+    .hl-flow li {
+        flex: 0 0 auto;
+    }
+}
