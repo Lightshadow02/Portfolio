@@ -1984,3 +1984,25 @@ a.skill-cert-link:focus-visible {
 @media (prefers-reduced-motion: reduce) {
     .cv-cta { transition: none; }
 }
+
+/* Technologies connues : grille pleine largeur sous les 4 catégories */
+@media screen and (min-width: 1024px) {
+    #competences .skills-wrapper {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "net cyber"
+            "script admin"
+            "tech tech";
+    }
+}
+
+#competences .tech-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+}
+
+@media screen and (max-width: 768px) {
+    #competences .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
