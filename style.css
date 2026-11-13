@@ -770,10 +770,6 @@ a.skill-cert-link:hover .cert-ext {
     place-items: center;
 }
 
-.tech-item img[alt="Apache"] {
-    filter: brightness(0) invert(0.9);
-}
-
 .tech-item span {
     font-size: 0.78rem;
     color: var(--text-2);
