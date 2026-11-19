@@ -1075,3 +1075,31 @@
         flex: 0 0 auto;
     }
 }
+
+/* ==== Page Nerysia : nœuds et liens supplémentaires du schéma ==== */
+.hl-arch .n-acc rect { fill: rgba(61, 214, 176, 0.08); stroke: #3dd6b0; stroke-width: 1.4; }
+.hl-arch .n-acc .t-title { fill: #63e4c4; }
+.hl-arch .n-info rect { fill: rgba(106, 168, 255, 0.07); stroke: rgba(106, 168, 255, 0.7); stroke-width: 1.2; }
+.hl-arch .n-info .t-title { fill: #8fbcff; }
+.hl-arch .l-info { stroke: #6aa8ff; stroke-width: 1.6; stroke-dasharray: 6 5; fill: none; }
+.hl-arch .a-head-b { fill: #6aa8ff; }
+
+.hl-status {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    max-width: 900px;
+    margin: -0.6rem 0 1.8rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-2);
+    font-size: 0.9rem;
+}
+
+.hl-status .available-dot {
+    flex: 0 0 auto;
+    margin-top: 0.45rem;
+    background: var(--warn);
+    animation: none;
+}

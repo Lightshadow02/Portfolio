@@ -117,7 +117,6 @@
                 <li><a href="#parcours">Parcours</a></li>
                 <li><a href="#competences">Compétences</a></li>
                 <li><a href="#projets">Projets</a></li>
-                <li><a href="homelab.html">HomeLab</a></li>
                 <li><a href="#interets">Intérêts</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="assets/docs/CV-Hugo-Loureiro.pdf" target="_blank" rel="noopener" class="nav-cv"><i class="fas fa-arrow-down" aria-hidden="true"></i> CV</a></li>
@@ -147,7 +146,7 @@
                 <div><dt>Diplôme</dt><dd>Ingénieur cybersécurité, Bac+5 <span>Liora × CyberUniversity, 2026</span></dd></div>
                 <div><dt>Certifications</dt><dd>ISO 27001 Lead Implementer <span>Bureau Veritas · AZ-104 · Stormshield CSNA · CCNA</span></dd></div>
                 <div><dt>Expérience</dt><dd>Administrateur réseaux en alternance <span>MS Solutions, 2022 — 2026</span></dd></div>
-                <div><dt>Projets</dt><dd><a href="#projets">Mémoire Iron4Software</a> · <a href="homelab.html">HomeLab Proxmox</a></dd></div>
+                <div><dt>Projets</dt><dd><a href="#projets">Mémoire Iron4Software</a> · <a href="nerysia.html">Nerysia</a> · <a href="homelab.html">HomeLab</a></dd></div>
                 <div><dt>Recherche</dt><dd>SOC · sécurité réseau · admin système <span>Franche-Comté, ou à distance</span></dd></div>
             </dl>
         </div>
@@ -598,13 +597,134 @@
                 <a href="https://github.com/Lightshadow02/Iron4Software/blob/main/memoire/Memoire-Iron4Software.pdf" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fas fa-file-pdf"></i> Lire le mémoire (PDF)</a>
             </div>
         </article>
-        <div id="projects-grid" class="projects-grid">
-            <!-- Projects will be loaded dynamically via JS -->
-            <div class="loading">Chargement des projets depuis GitHub...</div>
+        <!-- Nerysia -->
+        <article class="interest-card featured-project" id="nerysia">
+            <div class="interest-card-header">
+                <div class="interest-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div>
+                    <h3>Nerysia : réseau Minecraft multi-serveurs</h3>
+                    <span class="interest-badge">Co-fondateur et responsable technique · Java 21, Velocity, Redis, Node</span>
+                </div>
+            </div>
+            <p>
+                Un réseau de jeu <strong>Cobblemon</strong> conçu comme un système distribué : un proxy <strong>Velocity</strong> devant 3 serveurs Fabric,
+                un <strong>Redis</strong> partagé dont chaque message est <strong>signé en HMAC</strong>, une base MariaDB, un site d'administration avec
+                <strong>2FA</strong> et journal des consultations, un anti-triche, un lanceur et une chaîne de déploiement vérifiée par SHA-256.
+                <strong>234 619 lignes de Java</strong> et <strong>1 397 tests</strong> automatisés.
+            </p>
+            <div class="interest-tags">
+                <span><i class="fab fa-java"></i> Java 21 · Fabric</span>
+                <span><i class="fas fa-random"></i> Proxy Velocity</span>
+                <span><i class="fas fa-signature"></i> Redis signé HMAC</span>
+                <span><i class="fas fa-mobile-alt"></i> 2FA TOTP</span>
+                <span><i class="fas fa-user-secret"></i> Anti-triche</span>
+                <span><i class="fab fa-docker"></i> Docker · Pterodactyl</span>
+            </div>
+            <div class="featured-actions">
+                <a href="nerysia.html" class="btn primary-btn"><i class="fas fa-search-plus"></i> Voir Nerysia en détail</a>
+                <a href="https://github.com/Lightshadow02/Nerysia-LAUCHER" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fab fa-github"></i> Le lanceur sur GitHub</a>
+            </div>
+        </article>
+
+        <!-- HomeLab -->
+        <div class="interest-card featured-project" id="homelab">
+            <div class="interest-card-header">
+                <div class="interest-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div>
+                    <h3>HomeLab</h3>
+                    <span class="interest-badge">Infrastructure en production · depuis 2021</span>
+                </div>
+            </div>
+            <p>
+                Une <strong>infrastructure de type PME</strong> sur un serveur Ryzen 9 sous <strong>Proxmox VE</strong> (2 VM, 7 LXC, plus de 35 conteneurs Docker) :
+                pare-feu <strong>pfSense</strong> avec IPS <strong>Snort</strong> et <strong>pfBlockerNG</strong>, zones réseau séparées, VPN <strong>WireGuard</strong>,
+                DNS split-horizon avec DNSSEC, supervision <strong>Prometheus · Grafana · Loki</strong> et sauvegardes <strong>Proxmox Backup Server</strong> vérifiées.
+            </p>
+            <div class="interest-tags">
+                <span><i class="fas fa-cubes"></i> Proxmox VE</span>
+                <span><i class="fas fa-shield-alt"></i> pfSense · Snort</span>
+                <span><i class="fas fa-lock"></i> WireGuard</span>
+                <span><i class="fab fa-docker"></i> Docker / LXC</span>
+                <span><i class="fas fa-chart-area"></i> Grafana · Loki</span>
+                <span><i class="fas fa-database"></i> PBS</span>
+            </div>
+            <div class="featured-actions">
+                <a href="homelab.html" class="btn primary-btn"><i class="fas fa-search-plus"></i> Voir le HomeLab en détail</a>
+            </div>
+        </div>
+
+        <h3 class="projects-subtitle">Autres projets</h3>
+        <div class="repo-grid">
+            <a class="repo-card cat-sec" href="https://github.com/Lightshadow02/Rapport_de_fin_detudes-BUT3" target="_blank" rel="noopener">
+                <span class="repo-cat">Réseau & sécurité</span>
+                <h4>Rapport de fin d'études (BUT R&T)</h4>
+                <p>Architecture réseau sécurisée en entreprise, pendant l'alternance : DMZ à 3 niveaux sous pfSense, VPN WireGuard itinérant, supervision multi-site avec alertes.</p>
+                <span class="repo-tags"><span>pfSense</span><span>WireGuard</span><span>Proxmox</span><span>Uptime Kuma</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-sec" href="https://github.com/Lightshadow02/DMZNV3" target="_blank" rel="noopener">
+                <span class="repo-cat">Réseau & sécurité</span>
+                <h4>DMZ multi-niveaux</h4>
+                <p>Segmentation sous Proxmox : interfaces, règles de filtrage et NAT pfSense, serveur Apache isolé en DMZ.</p>
+                <span class="repo-tags"><span>pfSense</span><span>Proxmox</span><span>Apache</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-sec" href="https://github.com/Lightshadow02/VPN-Itin-rant" target="_blank" rel="noopener">
+                <span class="repo-cat">Réseau & sécurité</span>
+                <h4>VPN itinérant</h4>
+                <p>Serveur WireGuard sous Debian 11, clients nomades, NAT pfSense, et comparaison avec OpenVPN.</p>
+                <span class="repo-tags"><span>WireGuard</span><span>Debian</span><span>pfSense</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-sec" href="https://github.com/Lightshadow02/Mise-en-place-d_un-service-web-entrant" target="_blank" rel="noopener">
+                <span class="repo-cat">Réseau & sécurité</span>
+                <h4>Service web entrant</h4>
+                <p>Hébergement multi-sites sous Debian : hôtes virtuels Apache, MariaDB, PHP et certificats HTTPS.</p>
+                <span class="repo-tags"><span>Apache</span><span>MariaDB</span><span>OpenSSL</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-infra" href="https://github.com/Lightshadow02/baszel-snmp-bridge" target="_blank" rel="noopener">
+                <span class="repo-cat">Infra & supervision</span>
+                <h4>Pont SNMP → Beszel</h4>
+                <p>Fait remonter des NAS (QNAP, Buffalo) dans Beszel par SNMP : CPU, disques, RAID, S.M.A.R.T. Patch Go sur un fork épinglé, image Docker multi-étapes.</p>
+                <span class="repo-tags"><span>Go</span><span>SNMP</span><span>Docker</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-sys" href="https://github.com/Lightshadow02/SUFACE-GO-ARCHLINUX" target="_blank" rel="noopener">
+                <span class="repo-cat">Système Linux</span>
+                <h4>Arch Linux sur Surface Go</h4>
+                <p>ISO Arch sur mesure avec installeur : noyau linux-surface, chiffrement LUKS2, Secure Boot, mises à jour par timer systemd, ISO construite par GitHub Actions.</p>
+                <span class="repo-tags"><span>Bash</span><span>archiso</span><span>LUKS2</span><span>Secure Boot</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-dev" href="https://github.com/Lightshadow02/web-game" target="_blank" rel="noopener">
+                <span class="repo-cat">Développement</span>
+                <h4>Hub de jeux multijoueur</h4>
+                <p>8 jeux de cartes en temps réel. Serveur qui fait autorité, Discord OAuth avec state anti-CSRF, cookies signés, conteneur non-root.</p>
+                <span class="repo-tags"><span>Node.js</span><span>Socket.io</span><span>Docker</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-dev" href="https://github.com/Lightshadow02/utopia-admin" target="_blank" rel="noopener">
+                <span class="repo-cat">Développement</span>
+                <h4>Mod serveur « essentials »</h4>
+                <p>Mod NeoForge d'environ 53 000 lignes de Java : économie et banque, parcelles protégées, récompenses, API proxy Velocity.</p>
+                <span class="repo-tags"><span>Java</span><span>NeoForge</span><span>Velocity</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="repo-card cat-dev" href="https://github.com/Lightshadow02/Nerysia-LAUCHER" target="_blank" rel="noopener">
+                <span class="repo-cat">Développement</span>
+                <h4>Lanceur Nerysia</h4>
+                <p>Lanceur Electron multi-plateforme : profils de performance, mises à jour du modpack, news, builds par GitHub Actions.</p>
+                <span class="repo-tags"><span>Electron</span><span>GitHub Actions</span></span>
+                <span class="repo-link"><i class="fab fa-github" aria-hidden="true"></i> Voir sur GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
         </div>
         <div class="github-link-container">
-            <a href="https://github.com/Lightshadow02" target="_blank" class="btn secondary-btn"><i
-                    class="fab fa-github"></i> Pour en savoir plus, venez voir sur GitHub</a>
+            <a href="https://github.com/Lightshadow02" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fab fa-github"></i> Tous mes dépôts sur GitHub</a>
         </div>
     </section>
 
@@ -636,62 +756,6 @@
                     <span><i class="fas fa-handshake"></i> Gestion de projet</span>
                     <span><i class="fas fa-people-carry"></i> Travail en équipe</span>
                     <span><i class="fas fa-campground"></i> Camp ados JDR</span>
-                </div>
-            </div>
-
-            <!-- Nerysia -->
-            <div class="interest-card interest-nerysia">
-                <div class="interest-card-header">
-                    <div class="interest-icon">
-                        <i class="fas fa-cube"></i>
-                    </div>
-                    <div>
-                        <h3>Nerysia</h3>
-                        <span class="interest-badge">Co-fondateur & Responsable Technique</span>
-                    </div>
-                </div>
-                <p>
-                    Création et gestion complète d'une infrastructure <strong>Cross-Serveur</strong> (synchronisation des données).
-                    <strong>Sécurisation</strong> des bases de données et du code propriétaire.
-                    Développement de <strong>mods Minecraft</strong> exclusifs (Java) pour enrichir le gameplay.
-                    Déploiement et maintenance du <strong>site web</strong> et des services vocaux (VoIP).
-                </p>
-                <div class="interest-tags">
-                    <span><i class="fas fa-code"></i> Java / Mods</span>
-                    <span><i class="fas fa-rocket"></i> Launcher</span>
-                    <span><i class="fas fa-feather-alt"></i> Pterodactyl</span>
-                    <span><i class="fas fa-exchange-alt"></i> Cross-Serveur</span>
-                    <span><i class="fas fa-database"></i> BDD</span>
-                    <span><i class="fas fa-globe"></i> Web & VoIP</span>
-                </div>
-            </div>
-
-            <!-- HomeLab -->
-            <div class="interest-card interest-homelab" id="homelab">
-                <div class="interest-card-header">
-                    <div class="interest-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <div>
-                        <h3>HomeLab</h3>
-                        <span class="interest-badge">Infrastructure en production · depuis 2021</span>
-                    </div>
-                </div>
-                <p>
-                    Une <strong>infrastructure de type PME</strong> sur un serveur Ryzen 9 sous <strong>Proxmox VE</strong> (2 VM, 7 LXC, plus de 35 conteneurs Docker) :
-                    pare-feu <strong>pfSense</strong> avec IPS <strong>Snort</strong> et <strong>pfBlockerNG</strong>, zones réseau séparées, VPN <strong>WireGuard</strong>,
-                    DNS split-horizon avec DNSSEC, supervision <strong>Prometheus · Grafana · Loki</strong> et sauvegardes <strong>Proxmox Backup Server</strong> vérifiées.
-                </p>
-                <div class="interest-tags">
-                    <span><i class="fas fa-cubes"></i> Proxmox VE</span>
-                    <span><i class="fas fa-shield-alt"></i> pfSense · Snort</span>
-                    <span><i class="fas fa-lock"></i> WireGuard</span>
-                    <span><i class="fab fa-docker"></i> Docker / LXC</span>
-                    <span><i class="fas fa-chart-area"></i> Grafana · Loki</span>
-                    <span><i class="fas fa-database"></i> PBS</span>
-                </div>
-                <div class="featured-actions">
-                    <a href="homelab.html" class="btn primary-btn"><i class="fas fa-search-plus"></i> Voir le HomeLab en détail</a>
                 </div>
             </div>
 
@@ -798,8 +862,6 @@
         </div>
     </footer>
 
-    <!-- Marked.js for Markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
     <!-- Local projects data -->
     <script src="projects-data.js?v=20261106"></script>
     <script src="script.js?v=20261106"></script>
