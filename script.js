@@ -326,6 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return formatted;
     }
 
-    // Initialize
-    fetchProjects();
+    // Initialize (la grille dynamique est optionnelle : les projets sont maintenant listés à la main)
+    if (projectsGrid) fetchProjects();
 });

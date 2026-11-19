@@ -52,10 +52,10 @@ Les projets présentés sont récupérés **automatiquement** via l'API publique
 *   Filtrage intelligent pour mettre en avant les projets pertinents.
 *   Cartes avec un extrait du README de chaque projet.
 
-### 5. HomeLab & Projets Personnels
-Une section dédiée à ma passion pour l'auto-hébergement et l'infrastructure :
-*   **Nerysia** : Infrastructure de serveurs de jeux avec haute disponibilité.
-*   **HomeLab** : Environnement de test personnel (Proxmox, Docker, Nextcloud).
+### 5. Pages détaillées
+*   **`homelab.html`** : le HomeLab Proxmox (architecture, DNS, sécurité, sauvegardes, supervision, incidents).
+*   **`nerysia.html`** : Nerysia, réseau Minecraft multi-serveurs (proxy Velocity, Redis signé HMAC, site admin avec 2FA, anti-triche, déploiement).
+*   **Autres projets** : une sélection de dépôts publics, avec raccourcis vers GitHub.
 
 ---
 

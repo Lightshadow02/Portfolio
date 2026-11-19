@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0d10">
+    <title>Nerysia, réseau Minecraft multi-serveurs | Hugo Loureiro</title>
+    <meta name="description"
+        content="Nerysia : réseau Minecraft Cobblemon multi-serveurs conçu par Hugo Loureiro. Proxy Velocity, 3 serveurs Fabric, Redis signé HMAC, site admin avec 2FA, anti-triche, 234 000 lignes de Java et 1 397 tests.">
+    <meta name="author" content="Hugo Loureiro">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https: data:; connect-src 'self';">
+
+    <meta property="og:title" content="Nerysia, réseau Minecraft multi-serveurs | Hugo Loureiro">
+    <meta property="og:description" content="Architecture multi-serveurs, messages signés HMAC, site d'administration avec 2FA, anti-triche et chaîne de déploiement : l'étude de cas complète.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://hloureiro.fr/nerysia.html">
+    <meta property="og:locale" content="fr_FR">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="canonical" href="https://hloureiro.fr/nerysia.html">
+
+    <link rel="stylesheet" href="style.css?v=20261119">
+    <link rel="stylesheet" href="style_homelab_page.css?v=20261119">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body class="hl-page">
+
+    <nav class="navbar" aria-label="Navigation">
+        <a href="index.html" class="logo">Hugo Loureiro</a>
+        <ul class="hl-nav">
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#systeme">Système</a></li>
+            <li><a href="#securite">Sécurité</a></li>
+            <li><a href="#exploitation">Exploitation</a></li>
+            <li><a href="#lecons">Leçons</a></li>
+            <li><a href="index.html#projets" class="hl-back"><i class="fas fa-arrow-left"></i> Portfolio</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- En-tête -->
+        <header class="section hl-hero">
+            <h1>Nerysia : un réseau Minecraft <span class="highlight">multi-serveurs</span>, pensé comme un vrai SI</h1>
+            <p class="hl-lead">
+                Nerysia est un réseau de serveurs Minecraft <strong>Cobblemon</strong> (l'univers Pokémon) francophone, que j'ai co-fondé et dont je suis le
+                <strong>responsable technique</strong>. Derrière le jeu, il y a une vraie architecture distribuée : un proxy, plusieurs serveurs
+                qui partagent leurs données en temps réel, des messages signés, un site d'administration protégé par 2FA, un anti-triche,
+                un lanceur et une chaîne de déploiement automatisée. Le tout documenté comme un projet d'ingénierie : état, cahiers des charges, décisions et incidents.
+            </p>
+            <p class="hl-status"><span class="available-dot" aria-hidden="true"></span> Le réseau a tourné en production jusqu'à l'automne 2026. Il est en cours de remontage complet sur Pterodactyl, avant une bêta fermée.</p>
+            <div class="hl-actions">
+                <a href="https://github.com/Lightshadow02/Nerysia-LAUCHER" target="_blank" rel="noopener" class="btn primary-btn"><i class="fab fa-github"></i> Le lanceur sur GitHub</a>
+                <a href="https://www.nerysia.fr" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fas fa-globe"></i> Le site du serveur</a>
+            </div>
+
+            <div class="homelab-stats hl-stats">
+                <div><b>234 619</b><span>lignes de Java maison</span></div>
+                <div><b>1 397</b><span>tests JUnit automatisés</span></div>
+                <div><b>8</b><span>mods et plugins dans le monorepo</span></div>
+                <div><b>1 + 3</b><span>proxy Velocity + serveurs Fabric</span></div>
+                <div><b>HMAC</b><span>sur chaque message entre serveurs</span></div>
+                <div><b>69</b><span>récepteurs réseau limités en débit</span></div>
+                <div><b>63</b><span>permissions gérées par LuckPerms</span></div>
+                <div><b>142 → 4,6 Mo</b><span>poids du mod principal après optimisation</span></div>
+            </div>
+            <p class="hl-note">Chiffres mesurés dans les dépôts le 19 novembre 2026. Le code source est privé : seul le lanceur est public.</p>
+        </header>
+
+        <!-- Architecture -->
+        <section id="architecture" class="section">
+            <h2 class="section-title">Architecture</h2>
+
+            <div class="hl-svg-wrap">
+                <svg class="hl-arch" viewBox="0 0 1000 640" role="img" aria-labelledby="ny-title ny-desc">
+                    <title id="ny-title">Architecture du réseau Nerysia</title>
+                    <desc id="ny-desc">Le joueur passe par le lanceur puis par le proxy Velocity, qui répartit vers trois serveurs Fabric (Hub, Faction, RP). Les serveurs partagent un Redis signé HMAC et une base MariaDB. Un serveur envoie toutes les 15 minutes un rapport signé au site d'administration, qui pousse une liste blanche de données vers le site public et publie les news du lanceur via GitHub. À gauche, la chaîne de publication : banc de test, dépôt test puis stable, mise à jour des conteneurs au démarrage.</desc>
+                    <defs>
+                        <marker id="ny-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="a-head"/></marker>
+                        <marker id="ny-arr-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="a-head-g"/></marker>
+                        <marker id="ny-arr-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="a-head-b"/></marker>
+                    </defs>
+
+                    <!-- Joueur -->
+                    <g class="n-ext">
+                        <rect x="370" y="16" width="260" height="62" rx="8"/>
+                        <text x="500" y="42" class="t-title" text-anchor="middle">Joueur · lanceur Nerysia</text>
+                        <text x="500" y="62" class="t-sub" text-anchor="middle">Electron · 121 mods · compte Microsoft</text>
+                    </g>
+                    <line x1="500" y1="78" x2="500" y2="134" class="l-main" marker-end="url(#ny-arr)"/>
+                    <text x="510" y="94" class="t-mini">Minecraft · auth Mojang</text>
+
+                    <!-- Hébergement -->
+                    <rect x="196" y="100" width="608" height="420" rx="10" class="n-host"/>
+                    <text x="212" y="124" class="t-host">PTERODACTYL</text>
+                    <text x="212" y="140" class="t-mini">conteneurs Java 21</text>
+
+                    <!-- Proxy -->
+                    <g class="n-fw">
+                        <rect x="355" y="136" width="290" height="70" rx="8"/>
+                        <text x="500" y="162" class="t-title" text-anchor="middle">Proxy Velocity</text>
+                        <text x="500" y="182" class="t-sub" text-anchor="middle">plugin Nerysia · LuckPerms · grades et TAB</text>
+                        <text x="500" y="197" class="t-sub" text-anchor="middle">sanctions appliquées à tout le réseau</text>
+                    </g>
+
+                    <!-- Bus vers les backends -->
+                    <line x1="500" y1="206" x2="500" y2="228" class="l-main"/>
+                    <line x1="305" y1="228" x2="695" y2="228" class="l-main"/>
+                    <line x1="305" y1="228" x2="305" y2="250" class="l-main" marker-end="url(#ny-arr)"/>
+                    <line x1="500" y1="228" x2="500" y2="250" class="l-main" marker-end="url(#ny-arr)"/>
+                    <line x1="695" y1="228" x2="695" y2="250" class="l-main" marker-end="url(#ny-arr)"/>
+                    <text x="512" y="222" class="t-mini">forwarding moderne signé</text>
+
+                    <!-- Backends -->
+                    <g class="z-lan">
+                        <g class="chip"><rect x="222" y="252" width="166" height="74" rx="6"/></g>
+                        <text x="305" y="278" class="t-title" text-anchor="middle">HUB</text>
+                        <text x="305" y="298" class="t-sub" text-anchor="middle">Fabric 1.21.1 · accueil</text>
+                        <text x="305" y="314" class="t-sub" text-anchor="middle">arène, mini-jeux</text>
+                        <g class="chip"><rect x="417" y="252" width="166" height="74" rx="6"/></g>
+                        <text x="500" y="278" class="t-title" text-anchor="middle">FACTION</text>
+                        <text x="500" y="298" class="t-sub" text-anchor="middle">Fabric 1.21.1 · survie</text>
+                        <text x="500" y="314" class="t-sub" text-anchor="middle">raids, caisses, quêtes</text>
+                        <g class="chip"><rect x="612" y="252" width="166" height="74" rx="6"/></g>
+                        <text x="695" y="278" class="t-title" text-anchor="middle">RP</text>
+                        <text x="695" y="298" class="t-sub" text-anchor="middle">Fabric 1.21.1 · jeu de rôle</text>
+                        <text x="695" y="314" class="t-sub" text-anchor="middle">PNJ, dialogues, ligue</text>
+                    </g>
+                    <text x="500" y="346" class="t-mini" text-anchor="middle">mêmes mods partout : joueurs et Pokémon circulent</text>
+
+                    <!-- Bus vers les données -->
+                    <line x1="305" y1="326" x2="305" y2="372" class="l-sto"/>
+                    <line x1="500" y1="326" x2="500" y2="372" class="l-sto"/>
+                    <line x1="695" y1="326" x2="695" y2="372" class="l-sto"/>
+                    <line x1="305" y1="372" x2="695" y2="372" class="l-sto"/>
+                    <line x1="390" y1="372" x2="390" y2="404" class="l-sto" marker-end="url(#ny-arr-g)"/>
+                    <line x1="610" y1="372" x2="610" y2="404" class="l-sto" marker-end="url(#ny-arr-g)"/>
+
+                    <!-- Données -->
+                    <g class="n-nas">
+                        <rect x="262" y="406" width="230" height="78" rx="8"/>
+                        <text x="377" y="432" class="t-title" text-anchor="middle">Redis</text>
+                        <text x="377" y="452" class="t-sub" text-anchor="middle">pub/sub : chat, TPA, sanctions</text>
+                        <text x="377" y="470" class="t-sub" text-anchor="middle">signé HMAC-SHA256 · anti-rejeu 30 s</text>
+                    </g>
+                    <g class="n-nas">
+                        <rect x="508" y="406" width="230" height="78" rx="8"/>
+                        <text x="623" y="432" class="t-title" text-anchor="middle">MariaDB</text>
+                        <text x="623" y="452" class="t-sub" text-anchor="middle">joueurs, économie, quêtes</text>
+                        <text x="623" y="470" class="t-sub" text-anchor="middle">JDBC · pool HikariCP</text>
+                    </g>
+                    <text x="500" y="506" class="t-mini" text-anchor="middle">un seul endroit à sauvegarder pour tout le réseau</text>
+
+                    <!-- Colonne droite : sites -->
+                    <g class="n-acc">
+                        <rect x="826" y="250" width="164" height="96" rx="8"/>
+                        <text x="908" y="276" class="t-title" text-anchor="middle">Site admin</text>
+                        <text x="908" y="296" class="t-sub" text-anchor="middle">staff · Node + SQLite</text>
+                        <text x="908" y="312" class="t-sub" text-anchor="middle">Discord OAuth + 2FA</text>
+                        <text x="908" y="328" class="t-sub" text-anchor="middle">Docker · aucun port ouvert</text>
+                    </g>
+                    <path d="M778,300 L824,300" class="l-main" marker-end="url(#ny-arr)"/>
+                    <text x="800" y="230" class="t-mini" text-anchor="middle">HTTPS signé</text>
+                    <text x="800" y="244" class="t-mini" text-anchor="middle">toutes les 15 min</text>
+
+                    <g class="n-ext">
+                        <rect x="826" y="430" width="164" height="78" rx="8"/>
+                        <text x="908" y="456" class="t-title" text-anchor="middle">Site public</text>
+                        <text x="908" y="476" class="t-sub" text-anchor="middle">nerysia.fr · PHP 8.3</text>
+                        <text x="908" y="492" class="t-sub" text-anchor="middle">OAuth Microsoft + PKCE</text>
+                    </g>
+                    <line x1="908" y1="346" x2="908" y2="428" class="l-main" marker-end="url(#ny-arr)"/>
+                    <text x="900" y="384" class="t-mini" text-anchor="end">liste blanche</text>
+                    <text x="900" y="398" class="t-mini" text-anchor="end">signée</text>
+
+                    <g class="n-info">
+                        <rect x="826" y="136" width="164" height="66" rx="8"/>
+                        <text x="908" y="162" class="t-title" text-anchor="middle">GitHub</text>
+                        <text x="908" y="182" class="t-sub" text-anchor="middle">flux des news (feed.xml)</text>
+                    </g>
+                    <line x1="908" y1="250" x2="908" y2="204" class="l-info" marker-end="url(#ny-arr-b)"/>
+                    <text x="916" y="232" class="t-mini">commit</text>
+                    <path d="M890,136 L890,50 L632,50" class="l-info" marker-end="url(#ny-arr-b)"/>
+                    <text x="760" y="42" class="t-mini">news dans le lanceur</text>
+
+                    <!-- Colonne gauche : publication -->
+                    <g class="n-ext">
+                        <rect x="10" y="252" width="172" height="74" rx="8"/>
+                        <text x="96" y="278" class="t-title" text-anchor="middle">Banc de test</text>
+                        <text x="96" y="298" class="t-sub" text-anchor="middle">Velocity + 3 serveurs</text>
+                        <text x="96" y="314" class="t-sub" text-anchor="middle">+ Redis + MariaDB</text>
+                    </g>
+                    <line x1="96" y1="326" x2="96" y2="404" class="l-main" marker-end="url(#ny-arr)"/>
+                    <text x="104" y="370" class="t-mini">publier.py</text>
+                    <g class="n-ext">
+                        <rect x="10" y="406" width="172" height="78" rx="8"/>
+                        <text x="96" y="432" class="t-title" text-anchor="middle">Dépôt de publication</text>
+                        <text x="96" y="452" class="t-sub" text-anchor="middle">canaux test → stable</text>
+                        <text x="96" y="470" class="t-sub" text-anchor="middle">empreintes SHA-256</text>
+                    </g>
+                    <path d="M182,445 L222,445 L222,330" class="l-main" marker-end="url(#ny-arr)"/>
+                    <text x="96" y="506" class="t-mini" text-anchor="middle">vérifié au démarrage</text>
+                    <text x="96" y="520" class="t-mini" text-anchor="middle">de chaque conteneur</text>
+
+                    <!-- Légende -->
+                    <g class="legend">
+                        <line x1="196" y1="566" x2="236" y2="566" class="l-main"/><text x="246" y="571" class="t-mini">Trafic de jeu et flux applicatifs</text>
+                        <line x1="196" y1="594" x2="236" y2="594" class="l-sto"/><text x="246" y="599" class="t-mini">Données partagées (Redis, MariaDB)</text>
+                        <line x1="520" y1="566" x2="560" y2="566" class="l-info"/><text x="570" y="571" class="t-mini">Publication des news</text>
+                        <text x="520" y="599" class="t-mini">Aucun site ne peut commander le jeu</text>
+                    </g>
+                </svg>
+            </div>
+            <p class="hl-note hl-scroll-hint"><i class="fas fa-arrows-alt-h"></i> Sur mobile, faites glisser le schéma horizontalement.</p>
+
+            <h3 class="hl-h3">Les flux, du plus sensible au moins sensible</h3>
+            <div class="hl-table-wrap">
+                <table class="hl-table">
+                    <thead>
+                        <tr><th>De</th><th>Vers</th><th>Quoi</th><th>Protection</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Joueur</td><td>Proxy Velocity</td><td>Connexion de jeu</td><td>Authentification Mojang (<code>online-mode</code>), forwarding moderne signé vers les serveurs</td></tr>
+                        <tr><td>Serveurs</td><td>Redis</td><td>Chat réseau, TPA et homes entre serveurs, sanctions, verrous</td><td class="ok">HMAC-SHA256, horodatage, fenêtre anti-rejeu de 30 s</td></tr>
+                        <tr><td>Proxy</td><td>Serveurs</td><td>Ordres de l'arène, grades</td><td class="ok">Jeton dérivé du secret Velocity</td></tr>
+                        <tr><td>Un serveur</td><td>Site admin</td><td>Rapport complet, toutes les 15 min (un seul envoyeur grâce à un verrou Redis)</td><td class="ok">HMAC du corps brut, vérifié avant tout décodage, réception idempotente</td></tr>
+                        <tr><td>Site admin</td><td>Site public</td><td>Classements, fiches publiques</td><td class="ok">Liste blanche champ par champ, envoi signé</td></tr>
+                        <tr><td>Site admin</td><td>GitHub → lanceur</td><td>News du lanceur</td><td>Jeton limité à un dépôt, HTML filtré par liste blanche</td></tr>
+                        <tr><td>Lanceur</td><td>Hébergeur du modpack</td><td>121 mods, mise à jour toutes les 10 min</td><td>Empreintes MD5 du manifeste de distribution</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="hl-note">Les données ne remontent jamais dans l'autre sens : le site public n'appelle pas l'admin, et aucun site n'a de bouton qui agit sur le jeu. Les sanctions se font en jeu.</p>
+        </section>
+
+        <!-- Briques -->
+        <section id="briques" class="section">
+            <h2 class="section-title">Les briques logicielles</h2>
+            <div class="hl-table-wrap">
+                <table class="hl-table">
+                    <thead>
+                        <tr><th>Brique</th><th>Rôle</th><th>Technologies</th><th>Taille</th><th>État</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>Mod principal</th><td>Économie, menus, administration en jeu, anti-triche, journal, raids, caisses, homes et TPA, musique, grades, envoi vers le site</td><td>Java 21, Fabric 1.21.1, Cobblemon, Jedis, HikariCP</td><td>98 476 lignes · 592 tests · ~55 commandes</td><td>v1.8.8</td></tr>
+                        <tr><th>PNJ</th><td>Dialogues, boutiques, combats, routines, éditeur en jeu</td><td>Fabric, GeckoLib</td><td>25 661 lignes</td><td>8 phases livrées</td></tr>
+                        <tr><th>Arène</th><td>Combats classés Elo, file d'attente sur tout le réseau, arbitrée par le proxy</td><td>Fabric + Velocity</td><td>7 540 lignes</td><td>livrée</td></tr>
+                        <tr><th>Brèches</th><td>Portails vers les Pokémon légendaires</td><td>Fabric</td><td>7 900 lignes</td><td class="no">en cours</td></tr>
+                        <tr><th>Plugin proxy</th><td>Grades LuckPerms, TAB réseau, sanctions réseau, arbitre de l'arène</td><td>Velocity 3.5</td><td>3 839 lignes · 36 tests</td><td>livré</td></tr>
+                        <tr><th>Attaques, cosmétiques, assets</th><td>338 attaques animées, cosmétiques Cobblemon, 65 musiques, police</td><td>Fabric</td><td>—</td><td>livrés</td></tr>
+                        <tr><th>Nery-lib</th><td>Bibliothèque de menus déclaratifs : un écran = un fichier JSON, rechargeable à chaud</td><td>Fabric</td><td>41 778 lignes · 443 tests</td><td>v0.34</td></tr>
+                        <tr><th>NerysiaQuest</th><td>Quêtes partagées entre serveurs, éditeur en jeu, API</td><td>Fabric, SQLite / MySQL, HikariCP</td><td>27 902 lignes · 255 tests</td><td>v2.11</td></tr>
+                        <tr><th>Site admin</th><td>Reçoit, range, affiche et alerte : tableau de bord, fiches joueurs, modération, économie, chat</td><td>Node 24, Express, SQLite + FTS5, Docker</td><td>7 067 lignes · 36 tests · 41 tables</td><td class="no">bêta</td></tr>
+                        <tr><th>Site public</th><td>Statut, classements, fiches joueurs, connexion Microsoft, espace joueur</td><td>HTML/JS, PHP 8.3, GitHub Actions</td><td>14 pages</td><td class="no">en ligne, données de démo</td></tr>
+                        <tr><th>Lanceur</th><td>3 profils de performance, mises à jour automatiques, news</td><td>Electron (fork de HeliosLauncher)</td><td>modpack : 121 mods, ~707 Mo</td><td>v1.0.15 · Windows, macOS, Linux</td></tr>
+                        <tr><th>Wiki</th><td>Pokédex de 1 019 espèces, baies, factions</td><td>React 18</td><td>—</td><td class="no">refonte prévue</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="hl-note">Un co-développeur réalise le mod de factions et la synchronisation des Pokémon, qui ne sont pas comptés ici. Le développement se fait avec l'assistance de Claude Code ; l'architecture, la revue du code et la validation sur le banc de test restent de mon ressort.</p>
+        </section>
+
+        <!-- Système -->
+        <section id="systeme" class="section">
+            <h2 class="section-title">Conception système</h2>
+            <p class="hl-intro">Un réseau de jeu, c'est un <strong>système distribué</strong> : plusieurs serveurs, un état partagé, des pannes partielles et une dépendance majeure (Cobblemon) qui change d'API plusieurs fois par an.</p>
+
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-project-diagram"></i> Synchronisation entre serveurs</h3>
+                    <p>Une couche Redis d'environ 2 200 lignes, dont dépendent 27 fichiers : chat commun, TPA et homes d'un serveur à l'autre, sanctions, verrous. Chaque message est <strong>signé</strong> sur un JSON canonique (clés triées).</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-power-off"></i> Démarrage résilient</h3>
+                    <p><strong>48 étapes</strong> de démarrage isolées : si l'une tombe, les autres démarrent, et le récapitulatif nomme les domaines en échec. Le serveur démarre même sans Cobblemon.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-plug"></i> Un sas pour la dépendance critique</h3>
+                    <p>Les 88 appels à Cobblemon passent par un <strong>sas unique</strong> qui attrape aussi les <code>Error</code> : une rupture d'API ne lève pas une <code>Exception</code>, et un <code>catch</code> classique ne protège de rien.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-compress"></i> Protocole maîtrisé</h3>
+                    <p>Les 33 champs JSON du réseau sont <strong>compressés</strong> (facteur ~16). Le protocole Minecraft coupe la connexion au-delà de 32 767 caractères : un serveur devenait inaccessible en boucle avant cette correction.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-sitemap"></i> Point d'entrée réseau unique</h3>
+                    <p>Les <strong>69 récepteurs</strong> client → serveur passent par une seule porte, classée en 4 niveaux de coût. Un test automatisé échoue si un développeur contourne ce passage.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-database"></i> Cohérence des données</h3>
+                    <p>Le contrôle se fait <strong>dans la requête SQL</strong>, pas avant. Règle absolue : on n'écrit jamais un état déduit d'une lecture en erreur, qui ressemblerait à un joueur neuf et écraserait la vraie donnée.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-vial"></i> Tests à trois niveaux</h3>
+                    <p>JUnit sur la logique pure (<strong>1 397 tests</strong>, vérifiés par mutation), démarrage d'un serveur sans Cobblemon, puis le jar réellement livré sur un vrai réseau de test. Les 59 écrans sont vérifiés hors jeu en 3 secondes.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performance mesurée</h3>
+                    <p>Profilage avec spark et JFR : le code Nerysia pèse <strong>moins de 1 %</strong> du thread principal, contre 32 % pour Cobblemon. Le mod principal est passé de 142,4 Mo à 4,6 Mo.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Sécurité -->
+        <section id="securite" class="section">
+            <h2 class="section-title">Sécurité</h2>
+            <p class="hl-intro">Un serveur de jeu public est attaqué en permanence : triche, duplication d'objets, injection de paquets, vol de compte staff. La sécurité est pensée <strong>de bout en bout</strong>, du protocole de jeu jusqu'au site d'administration.</p>
+
+            <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-network-wired"></i> Entre les serveurs</h3>
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-signature"></i> Messages signés HMAC</h3>
+                    <p>HMAC-SHA256, horodatage, <strong>fenêtre anti-rejeu de 30 s</strong>, comparaison en temps constant. Une faille où un message <strong>non signé était accepté</strong> (fail-open) a été trouvée et corrigée.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-key"></i> Ordres du proxy authentifiés</h3>
+                    <p>Un audit a montré qu'un client pouvait <strong>forger un ordre</strong> du proxy. Les messages proxy → serveurs sont maintenant signés par un jeton dérivé du secret Velocity.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-ban"></i> Sanctions à l'échelle du réseau</h3>
+                    <p>Derrière un proxy, un bannissement local ne suffit pas : le joueur rebondissait sur un autre serveur. Les sanctions sont appliquées <strong>par le proxy</strong>, persistées et rejouées.</p>
+                </article>
+            </div>
+
+            <h3 class="hl-h3"><i class="fas fa-gamepad"></i> Dans le jeu</h3>
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-user-secret"></i> Anti-triche</h3>
+                    <p>Débit limité par <strong>réservoirs à jetons</strong> (alerte à 150 refus en 10 s, expulsion à 500), <strong>liste noire de mods</strong> demandée au client, argent, IV ou shiny anormaux, Pokémon dupliqués, vitesse, X-ray. Il signale ; il ne sanctionne seul que 3 cas sûrs.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-bomb"></i> Anti-bombe de décompression</h3>
+                    <p>Tout JSON envoyé par un client est plafonné à <strong>128 Kio compressés et 2 Mio décompressés</strong>, avant tout contrôle de permission : un paquet piégé ne peut pas saturer la mémoire du serveur.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-folder-minus"></i> Anti path traversal</h3>
+                    <p>Tout identifiant venu du réseau et destiné à devenir un nom de fichier passe une <strong>liste blanche stricte</strong> (<code>^[a-z0-9_-]{1,64}$</code>), refusé sans tentative de correction.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-user-shield"></i> Escalade de privilèges corrigée</h3>
+                    <p>Un contrôle de niveau OP codé en dur contournait LuckPerms, alors que certaines récompenses s'exécutent au niveau console : un modérateur pouvait <strong>exécuter des commandes console</strong>. Toutes les permissions passent maintenant par un gestionnaire unique (63 nœuds).</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-lock"></i> Menus en fail-closed</h3>
+                    <p>Dans la bibliothèque de menus, une action « commande » n'est exécutée que si une <strong>règle typée côté serveur</strong> l'autorise ; l'ouverture de liens vérifie l'hôte, et l'ouverture d'écrans est limitée.</p>
+                </article>
+            </div>
+
+            <h3 class="hl-h3"><i class="fas fa-shield-alt"></i> Sur le site d'administration</h3>
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Connexion forte</h3>
+                    <p>Discord OAuth avec <code>state</code> dans un cookie signé et protection contre l'open redirect, puis <strong>2FA TOTP obligatoire pour tous</strong> (RFC 6238, implémentation testée sur le vecteur officiel), anti-rejeu et blocage après trop d'essais.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-user-tag"></i> Moindre privilège</h3>
+                    <p>Quatre rôles : Modérateur, Admin, Admin MP, Fondateur. Le chat et les messages privés ne sont lisibles qu'avec le bon rôle, et <strong>après avoir saisi un motif</strong>.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-clipboard-list"></i> Traçabilité et RGPD</h3>
+                    <p>Chaque lecture du chat ou des MP est <strong>journalisée</strong> et visible des autres admins. Rétention : 90 jours pour le chat et les MP, 30 jours pour les mesures, 7 jours pour les envois bruts.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-inbox"></i> Réception robuste</h3>
+                    <p>Signature vérifiée <strong>avant tout décodage</strong>, en temps constant, plusieurs clés acceptées pendant une rotation. Réception idempotente (un rejeu n'a aucun effet), limitée à 30 requêtes par minute et 25 Mo.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-code"></i> Durcissement web</h3>
+                    <p>CSP <code>script-src 'self'</code>, <code>frame-ancestors 'none'</code>, HSTS, nosniff, no-referrer, noindex ; tout texte de joueur est échappé. Conteneur non-root, sauvegardes chiffrées en GPG, aucun port ouvert vers Internet.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-filter"></i> Fuite de données impossible par conception</h3>
+                    <p>Vers le site public, seule une <strong>liste blanche champ par champ</strong> sort : ni IV, ni soldes, ni chat, ni sanctions, ni positions de bases. Le site public utilise OAuth Microsoft avec <strong>PKCE</strong>, CSRF et limite de débit.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Exploitation -->
+        <section id="exploitation" class="section">
+            <h2 class="section-title">Exploitation</h2>
+            <p class="hl-intro">Une montée de version de Cobblemon touche <strong>tous les serveurs et le lanceur en même temps</strong>. Rien n'arrive en production sans être passé par le banc de test.</p>
+
+            <div class="hl-pipeline" role="img" aria-label="Chaîne de publication : banc de test, canal test, canal stable, puis mise à jour vérifiée au démarrage de chaque conteneur.">
+                <div class="hl-step">
+                    <i class="fas fa-flask"></i>
+                    <b>Banc de test</b>
+                    <span>proxy + 3 serveurs + Redis + MariaDB</span>
+                </div>
+                <div class="hl-link"><span>publication<br>scriptée</span></div>
+                <div class="hl-step hl-step-main">
+                    <i class="fas fa-box"></i>
+                    <b>Canal « test »</b>
+                    <span>empreintes SHA-256</span>
+                </div>
+                <div class="hl-link"><span>validé</span></div>
+                <div class="hl-step hl-step-main">
+                    <i class="fas fa-box-open"></i>
+                    <b>Canal « stable »</b>
+                    <span>retour arrière possible</span>
+                </div>
+                <div class="hl-link"><span>au<br>démarrage</span></div>
+                <div class="hl-step hl-step-copy">
+                    <i class="fas fa-server"></i>
+                    <b>Conteneurs Pterodactyl</b>
+                    <span>démarrent seulement si tout est complet</span>
+                </div>
+            </div>
+
+            <div class="hl-split">
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-rocket"></i> Déploiement</h3>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-cubes"></i> <strong>Un seul modèle de serveur</strong> (egg Pterodactyl) pour les 3 serveurs : le rôle (Hub, Faction, RP) est une variable.</li>
+                        <li><i class="fas fa-sync-alt"></i> Au démarrage, chaque conteneur compare son contenu au manifeste de son rôle, <strong>vérifie chaque jar</strong>, range au lieu d'effacer et garde les configurations modifiées à la main.</li>
+                        <li><i class="fas fa-user-secret"></i> La publication <strong>s'arrête si un secret</strong> se retrouve dans une configuration publiée ; les accès sont masqués dans la console.</li>
+                        <li><i class="fas fa-download"></i> Téléchargement parallèle avec reprise : de 3,9 à 14 Mo/s malgré le bridage par connexion de l'hébergeur.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-bell"></i> Supervision et alertes</h3>
+                    <ul class="featured-list">
+                        <li><i class="fas fa-heartbeat"></i> TPS, CPU, RAM et entités de chaque serveur <strong>toutes les 10 secondes</strong> ; profils spark et JFR en cas de lenteur.</li>
+                        <li><i class="fab fa-discord"></i> Alertes Discord au staff : plus rien reçu depuis 30 min, serveur lent, redémarrage, anti-triche, bannissement, gros mouvement d'argent, mod interdit.</li>
+                        <li><i class="fas fa-clock"></i> Tâche horaire de statistiques et de purge, contrôle de silence toutes les 5 minutes.</li>
+                        <li><i class="fas fa-database"></i> Sauvegardes : <code>mysqldump</code> en plus des sauvegardes Pterodactyl, base de l'admin chiffrée et copiée hors machine, copie avant chaque mise à jour.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leçons -->
+        <section id="lecons" class="section">
+            <h2 class="section-title">Incidents &amp; leçons</h2>
+
+            <article class="hl-incident">
+                <div class="hl-incident-head">
+                    <span class="hl-incident-tag">Faille de sécurité · corrigée</span>
+                    <h4><i class="fas fa-unlock"></i> La signature qui n'en était pas une</h4>
+                </div>
+                <div class="hl-incident-body">
+                    <div>
+                        <h5>Ce qui se passait</h5>
+                        <p>Les messages Redis entre serveurs étaient signés, mais un message <strong>sans signature</strong> était quand même accepté. N'importe quel accès au Redis permettait donc d'injecter des ordres sur tout le réseau.</p>
+                    </div>
+                    <div>
+                        <h5>Ce que j'ai fait</h5>
+                        <p>Passage en <strong>fail-closed</strong> : tout message non signé ou hors fenêtre est rejeté. Le déploiement a suivi un ordre précis, sinon le réseau « a l'air vivant » alors que plus rien ne circule. Une sortie de secours explicite et journalisée existe pour la transition.</p>
+                    </div>
+                    <div>
+                        <h5>Ce que j'en retiens</h5>
+                        <p>Un contrôle en fail-open <strong>n'est pas un contrôle</strong>. Et sécuriser un système distribué, c'est aussi planifier le déploiement de la sécurité elle-même.</p>
+                    </div>
+                </div>
+            </article>
+
+            <div class="hl-cards">
+                <article class="hl-card">
+                    <h3><i class="fas fa-ghost"></i> Le Pokémon qui disparaît</h3>
+                    <p>Un identifiant de cosmétique absent du registre pouvait faire disparaître <strong>toute l'équipe</strong> d'un joueur. Le serveur refuse désormais de démarrer si un identifiant manque. <strong>Leçon</strong> : une panne bruyante vaut mieux qu'une perte silencieuse.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-bug"></i> 8 bugs critiques, relus avant correction</h3>
+                    <p>Un nettoyage automatique supprimait les shiny qu'il devait protéger, un path traversal, une escalade de privilèges… <strong>Aucun corrigé sur la foi d'un rapport</strong> : chacun a été reproduit et relu dans le code.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> L'erreur qui n'est pas une exception</h3>
+                    <p>Une montée de version de Cobblemon lève une <code>NoSuchMethodError</code>, qu'un <code>catch (Exception)</code> ne rattrape pas. <strong>Leçon</strong> : connaître le modèle d'erreurs de sa plateforme, d'où le sas unique.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-infinity"></i> La boucle infinie à 20 Hz</h3>
+                    <p>Rattraper une erreur dans la boucle de jeu sans changer l'état qui l'a provoquée la relance 20 fois par seconde. <strong>Leçon</strong> : traiter la cause, pas seulement le symptôme.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-terminal"></i> Les pièges de l'exploitation</h3>
+                    <p>Un <code>&amp;&amp;</code> cassé par le script de démarrage de Pterodactyl, une fenêtre graphique qui bloquait un serveur sans écran, un bridage réseau par connexion chez l'hébergeur. <strong>Leçon</strong> : tester dans les conditions réelles.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-robot"></i> Esprit critique face à l'IA</h3>
+                    <p>Le développement assisté par IA a ses dérives : un audit généré contenait des « hallucinations », purgées après vérification. <strong>Leçon</strong> : la documentation est toujours vérifiée contre le code.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Gameplay & roadmap -->
+        <section id="roadmap" class="section">
+            <h2 class="section-title">Pour les joueurs &amp; la suite</h2>
+            <div class="hl-split">
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-gamepad"></i> Ce que le réseau propose</h3>
+                    <div class="interest-tags">
+                        <span>Deux monnaies et une boutique</span><span>Raids</span><span>Caisses</span><span>Quêtes quotidiennes et RP</span>
+                        <span>PNJ, ligue et badges</span><span>Arène classée Elo</span><span>338 attaques animées</span><span>Cosmétiques</span>
+                        <span>65 musiques</span><span>Récompenses quotidiennes</span><span>Homes et TPA entre serveurs</span><span>Chat commun</span>
+                        <span>Factions</span><span>Serveur RP</span><span>Mini-jeux</span><span>Lanceur à 3 profils</span><span>Wiki et Pokédex</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-clipboard-list"></i> To-do list</h3>
+                    <ul class="hl-todo">
+                        <li class="done">Architecture proxy + 3 serveurs, Redis signé, MariaDB partagée</li>
+                        <li class="done">Site d'administration avec 2FA, alertes et traçabilité</li>
+                        <li class="done">Chaîne de publication banc → test → stable</li>
+                        <li class="done">Audit et correction des failles (HMAC, escalade, traversal)</li>
+                        <li class="doing">Remontage complet du réseau sur Pterodactyl <em>en cours</em></li>
+                        <li class="todo"><b>Bêta fermée</b> avec 20 joueurs</li>
+                        <li class="todo">Site public sur les données réelles, boutique et cadre juridique (paiement, mineurs, RGPD)</li>
+                        <li class="todo">Pages admin : fréquentation, Pokémon et quêtes, arène</li>
+                        <li class="todo">Brèches, transfert de PC vers le serveur RP</li>
+                        <li class="todo">Sonde de version Cobblemon, internationalisation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hl-split hl-mt">
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-user-tie"></i> Ce que ça démontre</h3>
+                    <ul class="hl-skills">
+                        <li><b>Architecture distribuée</b> proxy, serveurs, état partagé <em>Admin systèmes</em></li>
+                        <li><b>Sécurité applicative</b> HMAC, 2FA, anti-rejeu, fail-closed <em>Sécurité / SOC</em></li>
+                        <li><b>Gestion des accès</b> LuckPerms, rôles, moindre privilège <em>IAM</em></li>
+                        <li><b>Détection</b> anti-triche, alertes, journalisation <em>Analyste SOC</em></li>
+                        <li><b>Protection des données</b> liste blanche, rétention, RGPD <em>GRC</em></li>
+                        <li><b>Déploiement</b> Docker, Pterodactyl, CI, intégrité SHA-256 <em>DevOps</em></li>
+                        <li><b>Développement</b> Java 21, Node, tests automatisés <em>Dev / DevSecOps</em></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="hl-h3 hl-h3-tight"><i class="fas fa-link"></i> Pour aller plus loin</h3>
+                    <ul class="featured-list">
+                        <li><i class="fab fa-github"></i> Le <a href="https://github.com/Lightshadow02/Nerysia-LAUCHER" target="_blank" rel="noopener">lanceur Nerysia</a> est public : Electron, build multi-plateforme, news et modpack publiés par GitHub Actions.</li>
+                        <li><i class="fas fa-globe"></i> Le <a href="https://www.nerysia.fr" target="_blank" rel="noopener">site du serveur</a>, en ligne avec des données de démonstration.</li>
+                        <li><i class="fas fa-lock"></i> Le code des mods et des sites reste <strong>privé</strong> : c'est le code d'un serveur en exploitation. Je peux le présenter en entretien.</li>
+                        <li><i class="fas fa-server"></i> Voir aussi mon <a href="homelab.html">HomeLab</a>, l'autre infrastructure que j'administre.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hl-actions hl-actions-end">
+                <a href="https://github.com/Lightshadow02/Nerysia-LAUCHER" target="_blank" rel="noopener" class="btn primary-btn"><i class="fab fa-github"></i> Le lanceur sur GitHub</a>
+                <a href="index.html#projets" class="btn secondary-btn"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-name">Hugo Loureiro</p>
+            <div class="socials">
+                <a href="https://www.linkedin.com/in/h-loureiro/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Lightshadow02" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:contact@hloureiro.fr" aria-label="E-mail"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Hugo Loureiro</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

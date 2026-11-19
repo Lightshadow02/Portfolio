@@ -1264,3 +1264,103 @@ footer {
         max-width: calc(100vw - 24px);
     }
 }
+
+/* ---------- Projets : sous-titre et cartes de dépôts ---------- */
+.featured-project + .featured-project {
+    margin-top: 0;
+}
+
+.projects-subtitle {
+    margin: 3rem 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+}
+
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.repo-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.repo-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+}
+
+.repo-cat {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent);
+}
+
+.repo-card h4 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+}
+
+.repo-card p {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--text-2);
+}
+
+.repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.repo-tags span {
+    font-size: 0.74rem;
+    color: var(--text-2);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
+}
+
+.repo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.repo-link .fa-arrow-right {
+    font-size: 0.75rem;
+    color: var(--text-3);
+    transition: transform var(--transition), color var(--transition);
+}
+
+.repo-card:hover .repo-link .fa-arrow-right {
+    transform: translateX(3px);
+    color: var(--accent);
+}
+
+@media (max-width: 640px) {
+    .repo-grid {
+        grid-template-columns: 1fr;
+    }
+}
