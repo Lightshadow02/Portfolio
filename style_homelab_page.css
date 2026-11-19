@@ -1144,3 +1144,8 @@
 @media (max-width: 900px) { .ny-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .ny-gallery { gap: 0.6rem; } .ny-gallery figcaption { font-size: 0.78rem; } }
 @media (prefers-reduced-motion: reduce) { .ny-gallery img { transition: none; } }
+
+/* Captures du site admin : deux colonnes au format de l'écran, jamais trois */
+.ny-shots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ny-shots img { aspect-ratio: 16 / 10; }
+@media (max-width: 700px) { .ny-shots { grid-template-columns: 1fr; } }
