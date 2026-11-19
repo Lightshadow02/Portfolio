@@ -1364,3 +1364,79 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* ---------- Une couleur par projet ---------- */
+.featured-project {
+    --pc: var(--accent);
+    --pc-hover: var(--accent-hover);
+    --pc-ink: var(--accent-ink);
+    --pc-soft: var(--accent-soft);
+    border-top: 2px solid var(--pc);
+}
+
+#iron4software {
+    --pc: #f27171;
+    --pc-hover: #f59a9a;
+    --pc-ink: #1c0707;
+    --pc-soft: rgba(242, 113, 113, 0.12);
+}
+
+#nerysia {
+    --pc: #a78bfa;
+    --pc-hover: #c4b5fd;
+    --pc-ink: #140b2b;
+    --pc-soft: rgba(167, 139, 250, 0.13);
+}
+
+.featured-project .interest-icon {
+    background: var(--pc-soft);
+    color: var(--pc);
+}
+
+.featured-project .interest-badge,
+.featured-project .featured-list li > i:first-child,
+.featured-project .interest-tags span i {
+    color: var(--pc);
+}
+
+.featured-project .primary-btn {
+    background: var(--pc);
+    color: var(--pc-ink);
+}
+
+.featured-project .primary-btn:hover {
+    background: var(--pc-hover);
+}
+
+/* Autres projets : une couleur par catégorie */
+.repo-card {
+    --rc: var(--accent);
+    border-top: 2px solid var(--rc);
+}
+
+.repo-card.cat-sec { --rc: #f27171; }
+.repo-card.cat-infra { --rc: #3dd6b0; }
+.repo-card.cat-sys { --rc: #6aa8ff; }
+.repo-card.cat-dev { --rc: #f2b54a; }
+
+.repo-card .repo-cat {
+    color: var(--rc);
+}
+
+.repo-card:hover .repo-link .fa-arrow-right {
+    color: var(--rc);
+}
+
+/* Page Nerysia : accent violet, comme sa carte */
+.ny-page {
+    --accent: #a78bfa;
+    --accent-hover: #c4b5fd;
+    --accent-ink: #140b2b;
+    --accent-soft: rgba(167, 139, 250, 0.12);
+    --accent-line: rgba(167, 139, 250, 0.35);
+    --accent-primary: #a78bfa;
+}
+
+.ny-page ::selection {
+    background: rgba(167, 139, 250, 0.3);
+}
