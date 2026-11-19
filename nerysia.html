@@ -36,6 +36,7 @@
     <nav class="navbar" aria-label="Navigation">
         <a href="index.html" class="logo">Hugo Loureiro</a>
         <ul class="hl-nav">
+            <li><a href="#origine">Origine</a></li>
             <li><a href="#architecture">Architecture</a></li>
             <li><a href="#systeme">Système</a></li>
             <li><a href="#securite">Sécurité</a></li>
@@ -50,12 +51,12 @@
         <header class="section hl-hero">
             <h1>Nerysia : un réseau Minecraft <span class="highlight">multi-serveurs</span>, pensé comme un vrai SI</h1>
             <p class="hl-lead">
-                Nerysia est un réseau de serveurs Minecraft <strong>Cobblemon</strong> (l'univers Pokémon) francophone, que j'ai co-fondé et dont je suis le
-                <strong>responsable technique</strong>. Derrière le jeu, il y a une vraie architecture distribuée : un proxy, plusieurs serveurs
+                Nerysia est un réseau de serveurs Minecraft <strong>Cobblemon</strong> (l'univers Pokémon) francophone, que j'ai co-fondé avec le streamer BurriTV et dont je suis le
+                <strong>responsable technique</strong> : administrateur, concepteur et responsable de toute l'infrastructure. Derrière le jeu, il y a une vraie architecture distribuée : un proxy, plusieurs serveurs
                 qui partagent leurs données en temps réel, des messages signés, un site d'administration protégé par 2FA, un anti-triche,
                 un lanceur et une chaîne de déploiement automatisée. Le tout documenté comme un projet d'ingénierie : état, cahiers des charges, décisions et incidents.
             </p>
-            <p class="hl-status"><span class="available-dot" aria-hidden="true"></span> Le réseau a tourné en production jusqu'à l'automne 2026. Il est en cours de remontage complet sur Pterodactyl, avant une bêta fermée.</p>
+            <p class="hl-status"><span class="available-dot" aria-hidden="true"></span> La bêta fermée est passée. En cours : le site public et le remontage complet du réseau sur Pterodactyl.</p>
             <div class="hl-actions">
                 <a href="https://github.com/Lightshadow02/Nerysia-LAUCHER" target="_blank" rel="noopener" class="btn primary-btn"><i class="fab fa-github"></i> Le lanceur sur GitHub</a>
                 <a href="https://www.nerysia.fr" target="_blank" rel="noopener" class="btn secondary-btn"><i class="fas fa-globe"></i> Le site du serveur</a>
@@ -73,6 +74,63 @@
             </div>
             <p class="hl-note">Chiffres mesurés dans les dépôts le 19 novembre 2026. Le code source est privé : seul le lanceur est public.</p>
         </header>
+
+        <!-- Origine -->
+        <section id="origine" class="section">
+            <h2 class="section-title">Pourquoi cette architecture</h2>
+            <p class="hl-intro">Nerysia n'est pas parti d'une page blanche. Avant lui, il y avait <strong>PokéStream</strong>, notre premier serveur Pokémon, lancé en 2022 avec BurriTV sur mon <a href="homelab.html">HomeLab</a>. J'y étais déjà responsable de toute la partie technique.</p>
+
+            <div class="hl-cards hl-cards-2">
+                <article class="hl-card">
+                    <h3><i class="fas fa-temperature-high"></i> Un seul serveur, à bout de souffle</h3>
+                    <p>PokéStream faisait tout tourner sur <strong>un seul serveur</strong> : le monde, les Pokémon, l'économie et tous les joueurs. Il tournait trop fort, et ça se voyait en jeu : du lag, et de vrais problèmes pour les joueurs.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-drafting-compass"></i> Une infrastructure conçue par nous</h3>
+                    <p>Avec BurriTV, on a décidé de repartir sur une base faite pour grandir. En tant que responsable technique, j'ai conçu une architecture <strong>répartie</strong> : un proxy devant plusieurs serveurs spécialisés (Hub, Faction, RP), pour partager la charge et augmenter la puissance disponible.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-check-circle"></i> Le résultat sur la bêta</h3>
+                    <p>Sur la bêta fermée, la différence s'est vue tout de suite : <strong>beaucoup moins de lag</strong>, et tout fonctionnait sans accroc.</p>
+                </article>
+                <article class="hl-card">
+                    <h3><i class="fas fa-balance-scale"></i> Le prix à payer</h3>
+                    <p>Répartir la charge complique le développement : il faut <strong>synchroniser</strong> les joueurs, leurs Pokémon, l'argent et les sanctions entre plusieurs serveurs. On y arrive petit à petit, et le réseau commence à être vraiment solide. La suite de la page montre comment.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- En jeu -->
+        <section id="en-jeu" class="section">
+            <h2 class="section-title">En jeu</h2>
+            <p class="hl-intro">Quelques vues du monde de Nerysia, reprises du lanceur et du site du serveur.</p>
+            <div class="ny-gallery">
+                <figure>
+                    <a href="assets/nerysia/ponton-legendaires.webp" target="_blank" rel="noopener"><img src="assets/nerysia/ponton-legendaires.webp" width="1200" height="675" loading="lazy" decoding="async" alt="Un ponton de nuit entouré de faisceaux lumineux et de Pokémon légendaires, le logo Nerysia au premier plan"></a>
+                    <figcaption>Le ponton des légendaires</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/nerysia/centre-pokemon.webp" target="_blank" rel="noopener"><img src="assets/nerysia/centre-pokemon.webp" width="1200" height="675" loading="lazy" decoding="async" alt="Un grand bâtiment au toit rouge orné d'une Poké Ball, de jour"></a>
+                    <figcaption>Un centre Pokémon</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/nerysia/arene-nuit.webp" target="_blank" rel="noopener"><img src="assets/nerysia/arene-nuit.webp" width="1200" height="675" loading="lazy" decoding="async" alt="Une arène lumineuse violette au creux des montagnes, de nuit"></a>
+                    <figcaption>Une arène, de nuit</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/nerysia/aurore-boreale.webp" target="_blank" rel="noopener"><img src="assets/nerysia/aurore-boreale.webp" width="1200" height="675" loading="lazy" decoding="async" alt="Un village au bord de l'eau sous une aurore boréale verte"></a>
+                    <figcaption>Aurore boréale sur le village</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/nerysia/village-lac.webp" target="_blank" rel="noopener"><img src="assets/nerysia/village-lac.webp" width="1200" height="675" loading="lazy" decoding="async" alt="Des maisons en bois qui se reflètent dans un lac, de jour"></a>
+                    <figcaption>Le village au bord du lac</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/nerysia/torii.webp" target="_blank" rel="noopener"><img src="assets/nerysia/torii.webp" width="1200" height="675" loading="lazy" decoding="async" alt="Un torii rouge au bout d'un chemin, entouré de bambous"></a>
+                    <figcaption>Le chemin du torii</figcaption>
+                </figure>
+            </div>
+        </section>
 
         <!-- Architecture -->
         <section id="architecture" class="section">
@@ -380,6 +438,18 @@
                     <p>Vers le site public, seule une <strong>liste blanche champ par champ</strong> sort : ni IV, ni soldes, ni chat, ni sanctions, ni positions de bases. Le site public utilise OAuth Microsoft avec <strong>PKCE</strong>, CSRF et limite de débit.</p>
                 </article>
             </div>
+
+            <div class="ny-gallery ny-shots hl-mt">
+                <figure>
+                    <a href="assets/nerysia/admin-tableau.webp" target="_blank" rel="noopener"><img src="assets/nerysia/admin-tableau.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Tableau de bord du site d'administration : trois serveurs et le proxy, avec joueurs, TPS, RAM et CPU, puis les courbes sur 24 heures"></a>
+                    <figcaption>Le tableau de bord : l'état des 3 serveurs et du proxy, envoyé toutes les 15 minutes par le jeu.</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/nerysia/admin-moderation.webp" target="_blank" rel="noopener"><img src="assets/nerysia/admin-moderation.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Page Modération et anti-triche : compteurs, puis des alertes de Pokémon présents chez deux joueurs au même instant, chacune avec un bouton Marquer traitée"></a>
+                    <figcaption>L'anti-triche : un même Pokémon repéré chez deux joueurs au même instant, alerte à traiter.</figcaption>
+                </figure>
+            </div>
+            <p class="hl-note">Captures prises avec les données de démonstration de la bêta : pseudos et chiffres sont fictifs.</p>
         </section>
 
         <!-- Exploitation -->
@@ -506,14 +576,15 @@
                     <ul class="hl-todo">
                         <li class="done">Architecture proxy + 3 serveurs, Redis signé, MariaDB partagée</li>
                         <li class="done">Site d'administration avec 2FA, alertes et traçabilité</li>
+                        <li class="done">Pages admin : fréquentation, Pokémon et quêtes, arène</li>
                         <li class="done">Chaîne de publication banc → test → stable</li>
                         <li class="done">Audit et correction des failles (HMAC, escalade, traversal)</li>
+                        <li class="done">Sonde de version Cobblemon : un verdict unique au démarrage au lieu d'une panne dispersée</li>
+                        <li class="done"><b>Bêta fermée</b> : beaucoup moins de lag que sur l'ancien serveur</li>
+                        <li class="doing">Site public sur les données réelles, boutique et cadre juridique (paiement, mineurs, RGPD) <em>en cours</em></li>
                         <li class="doing">Remontage complet du réseau sur Pterodactyl <em>en cours</em></li>
-                        <li class="todo"><b>Bêta fermée</b> avec 20 joueurs</li>
-                        <li class="todo">Site public sur les données réelles, boutique et cadre juridique (paiement, mineurs, RGPD)</li>
-                        <li class="todo">Pages admin : fréquentation, Pokémon et quêtes, arène</li>
                         <li class="todo">Brèches, transfert de PC vers le serveur RP</li>
-                        <li class="todo">Sonde de version Cobblemon, internationalisation</li>
+                        <li class="todo">Internationalisation (971 textes)</li>
                     </ul>
                 </div>
             </div>

@@ -1103,3 +1103,49 @@
     background: var(--warn);
     animation: none;
 }
+
+/* « En cours » en orange : distinct du jaune d'avertissement et visible d'un coup d'œil */
+.hl-todo li.doing { border-color: rgba(251, 146, 60, 0.5); background: rgba(251, 146, 60, 0.06); color: var(--text); }
+.hl-todo li.doing::before { content: "…"; color: #fb923c; }
+.hl-todo li.doing em { color: #fb923c; font-weight: 500; }
+
+/* Quatre cartes de récit : deux colonnes, sinon le texte se tasse sur quatre */
+.hl-cards-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+
+/* Galerie Nerysia */
+.ny-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+.ny-gallery figure { margin: 0; }
+.ny-gallery a {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+}
+.ny-gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 400ms var(--ease);
+}
+.ny-gallery a:hover img,
+.ny-gallery a:focus-visible img { transform: scale(1.03); }
+.ny-gallery figcaption {
+    margin-top: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--text-2);
+}
+@media (max-width: 900px) { .ny-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .ny-gallery { gap: 0.6rem; } .ny-gallery figcaption { font-size: 0.78rem; } }
+@media (prefers-reduced-motion: reduce) { .ny-gallery img { transition: none; } }
+
+/* Captures du site admin : deux colonnes au format de l'écran, jamais trois */
+.ny-shots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ny-shots img { aspect-ratio: 16 / 10; }
+@media (max-width: 700px) { .ny-shots { grid-template-columns: 1fr; } }
